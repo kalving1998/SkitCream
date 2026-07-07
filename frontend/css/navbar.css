@@ -1,0 +1,175 @@
+/*=============================
+            HEADER
+=============================*/
+
+.header {
+  width: 100%;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+/*=============================
+           NAVBAR
+=============================*/
+
+.navbar {
+  height: 95px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+/*=============================
+            LOGO
+=============================*/
+
+.logo img {
+  width: 90px;
+  display: block;
+}
+
+/*=============================
+            MENU
+=============================*/
+
+.menu {
+  display: flex;
+
+  align-items: center;
+
+  gap: 45px;
+
+  list-style: none;
+}
+
+.menu li {
+  position: relative;
+}
+
+.menu a {
+  text-decoration: none;
+
+  font-family: var(--text-font);
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  color: var(--primary-color);
+
+  transition: 0.3s;
+}
+
+.menu a:hover {
+  color: var(--secondary-color);
+}
+
+/* Línea verde */
+
+.menu .active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -12px;
+
+  width: 100%;
+
+  height: 3px;
+
+  background: var(--secondary-color);
+
+  border-radius: 20px;
+}
+
+/*=============================
+        ACCIONES
+=============================*/
+
+.navbar-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+}
+
+.login-link {
+  text-decoration: none;
+
+  color: var(--primary-color);
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  transition: 0.3s;
+}
+
+.login-link:hover {
+  color: var(--secondary-color);
+}
+
+/*=============================
+            ICONOS
+=============================*/
+
+.icon-btn {
+  width: 42px;
+
+  height: 42px;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-size: 20px;
+
+  position: relative;
+
+  transition: 0.3s;
+}
+
+.icon-btn:hover {
+  transform: scale(1.08);
+}
+
+/*=============================
+            BADGE
+=============================*/
+
+.badge {
+  position: absolute;
+
+  top: 3px;
+
+  right: 2px;
+
+  width: 18px;
+
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: var(--secondary-color);
+
+  color: #fff;
+
+  font-size: 11px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}

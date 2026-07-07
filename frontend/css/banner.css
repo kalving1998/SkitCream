@@ -1,0 +1,74 @@
+/*=============================
+      BANNER PROMOCIONAL
+=============================*/
+
+.banner {
+  padding: 40px 0 80px;
+}
+
+.banner-box {
+  background: var(--secondary-color);
+  border-radius: var(--radius);
+  padding: 50px 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  overflow: hidden;
+}
+
+/*=============================
+        TEXTO DEL BANNER
+=============================*/
+
+.banner-texto {
+  flex: 1;
+  max-width: 420px;
+}
+
+.banner-texto h2 {
+  font-family: var(--title-font);
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 14px;
+}
+
+.banner-texto p {
+  color: #fff;
+  opacity: 0.9;
+  margin-bottom: 26px;
+}
+
+.btn-whatsapp {
+  background: #fff;
+  color: var(--primary-color);
+}
+
+.btn-whatsapp:hover {
+  background: var(--surface-color);
+}
+
+/*=============================
+        IMAGEN DEL BANNER
+=============================*/
+
+.banner-imagen {
+  flex: 1;
+  max-width: 380px;
+}
+
+.banner-imagen img {
+  width: 100%;
+  border-radius: var(--radius);
+  display: block;
+}
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-whatsapp i {
+  font-size: 1.2rem;
+  color: #25d366;
+}

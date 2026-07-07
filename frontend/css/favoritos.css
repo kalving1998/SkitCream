@@ -1,0 +1,57 @@
+/*=============================
+          FAVORITOS
+=============================*/
+
+.favoritos {
+  padding: 60px 0;
+}
+
+.ver-todas {
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.ver-todas:hover {
+  color: var(--secondary-color);
+}
+
+/*=============================
+        GRID DE TARJETAS
+=============================*/
+
+.favoritos-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+.favorito-card {
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  padding: 30px 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.favorito-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.favorito-card p {
+  font-family: var(--text-font);
+  font-weight: 500;
+  color: var(--primary-color);
+  font-size: 15px;
+}
+
+.favorito-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}

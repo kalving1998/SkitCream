@@ -1,0 +1,34 @@
+:root {
+  /* Colores */
+
+  --primary-color: #5b2c1d;
+  --primary-light: #6b3b42;
+
+  --secondary-color: #92ae72;
+  --secondary-hover: #789767;
+
+  --background-color: #ffffff;
+  --surface-color: #f8f6f2;
+
+  --text-color: #2e2e2e;
+  --text-light: #777777;
+
+  --border-color: #e8e8e8;
+
+  /* Tipografías */
+
+  --title-font: "Playfair Display", serif;
+  --text-font: "Poppins", sans-serif;
+
+  /* Sombras */
+
+  --shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+  /* Bordes */
+
+  --radius: 15px;
+
+  /* Animación */
+
+  --transition: 0.3s ease;
+}

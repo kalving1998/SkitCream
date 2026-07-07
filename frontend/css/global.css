@@ -1,0 +1,61 @@
+/* ===========================
+   ESTILOS GLOBALES
+=========================== */
+
+body {
+  font-family: var(--text-font);
+
+  background: var(--background-color);
+
+  color: var(--text-color);
+}
+
+.container {
+  width: min(1200px, 90%);
+
+  margin: auto;
+}
+
+section {
+  padding: 80px 0;
+}
+
+.section-title {
+  font-family: var(--title-font);
+
+  font-size: 2.5rem;
+
+  color: var(--primary-color);
+
+  text-align: center;
+
+  margin-bottom: 20px;
+}
+
+.section-text {
+  text-align: center;
+
+  color: var(--text-light);
+
+  max-width: 700px;
+
+  margin: auto;
+}
+/*=============================
+    ENCABEZADO DE SECCIÓN
+    (reutilizable en Favoritos,
+    Productos, Categorías, etc.)
+=============================*/
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.section-header .section-title {
+  text-align: left;
+  margin-bottom: 0;
+  font-size: 1.8rem;
+}

@@ -1,0 +1,111 @@
+/*=============================
+            HERO
+=============================*/
+
+.hero {
+  padding: 60px 0;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+/*=============================
+        TEXTO DEL HERO
+=============================*/
+
+.hero-text {
+  flex: 1;
+  max-width: 520px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--surface-color);
+  color: var(--primary-color);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+
+.hero-text h1 {
+  font-family: var(--title-font);
+  font-size: 3rem;
+  line-height: 1.2;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.hero-text h1 span {
+  color: var(--secondary-color);
+}
+
+.hero-text p {
+  color: var(--text-light);
+  font-size: 16px;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  max-width: 440px;
+}
+
+/*=============================
+        BOTONES DEL HERO
+=============================*/
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 30px;
+  border-radius: 30px;
+  font-family: var(--text-font);
+  font-weight: 500;
+  font-size: 15px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--secondary-color);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--secondary-hover);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/*=============================
+        IMAGEN DEL HERO
+=============================*/
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
