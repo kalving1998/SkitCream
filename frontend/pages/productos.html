@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Categorías | SkitCream</title>
+    <title>Productos | SkitCream</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="../css/global.css" />
     <link rel="stylesheet" href="../css/navbar.css" />
     <link rel="stylesheet" href="../css/productos-destacados.css" />
-    <link rel="stylesheet" href="../css/categories.css" />
+    <link rel="stylesheet" href="../css/productos-page.css" />
     <link rel="stylesheet" href="../css/footer.css" />
     <link rel="stylesheet" href="../css/responsive.css" />
   </head>
@@ -44,8 +44,8 @@
           <ul class="menu">
             <li><a href="../index.html">Inicio</a></li>
             <li><a href="#">Nosotros</a></li>
-            <li><a href="productos.html">Productos</a></li>
-            <li class="active"><a href="categorias.html">Categorías</a></li>
+            <li class="active"><a href="productos.html">Productos</a></li>
+            <li><a href="categorias.html">Categorías</a></li>
             <li><a href="#">Contacto</a></li>
           </ul>
 
@@ -62,95 +62,77 @@
     </header>
 
     <main>
-      <!-- ================= CATEGORÍAS ================= -->
+      <!-- ================= PRODUCTOS (EDITORIAL) ================= -->
 
-      <section class="categorias-page">
+      <section class="productos-page">
         <div class="container">
-          <!-- Banner de categoría activa -->
-          <div class="categoria-hero">
-            <div>
-              <h1>Todas las categorías</h1>
-              <p>Explora nuestro menú completo por tipo de producto</p>
+          <div class="productos-page-header">
+            <h1>Todos nuestros productos</h1>
+            <p>Cada uno hecho a mano, con ingredientes reales y sin apuro.</p>
+          </div>
+
+          <div class="producto-fila">
+            <div class="producto-fila-imagen">
+              <img
+                src="../assets/images/products/red-velvet.jpg"
+                alt="Torta Red Velvet"
+              />
+            </div>
+            <div class="producto-fila-texto">
+              <span class="producto-fila-categoria">Tortas</span>
+              <h2>Torta Red Velvet</h2>
+              <p>
+                Bizcocho de cacao suave con relleno y cobertura de queso crema,
+                decorada con virutas de chocolate.
+              </p>
+              <div class="producto-fila-footer">
+                <span class="precio">$65.000</span>
+                <button class="fav-btn">♡</button>
+                <button class="cart-add-btn">🛒</button>
+              </div>
             </div>
           </div>
 
-          <!-- Chips de filtro -->
-          <div class="categoria-chips">
-            <div class="chip active">Todas</div>
-            <div class="chip">Tortas</div>
-            <div class="chip">Fresas con crema</div>
-            <div class="chip">Postres</div>
-            <div class="chip">Cafés</div>
-            <div class="chip">Bebidas</div>
+          <div class="producto-fila">
+            <div class="producto-fila-imagen">
+              <img
+                src="../assets/images/products/fresas.jpg"
+                alt="Fresas con Crema"
+              />
+            </div>
+            <div class="producto-fila-texto">
+              <span class="producto-fila-categoria">Fresas con crema</span>
+              <h2>Fresas con Crema Clásicas</h2>
+              <p>
+                Fresas frescas bañadas en crema batida, servidas en copa
+                individual. Perfectas para compartir.
+              </p>
+              <div class="producto-fila-footer">
+                <span class="precio">$15.500</span>
+                <button class="fav-btn">♡</button>
+                <button class="cart-add-btn">🛒</button>
+              </div>
+            </div>
           </div>
 
-          <!-- Grid de productos de la categoría -->
-          <div class="productos-grid">
-            <div class="producto-card">
-              <div class="producto-imagen">
-                <img
-                  src="../assets/images/products/red-velvet.jpg"
-                  alt="Torta Red Velvet"
-                />
-                <button class="fav-btn">♡</button>
-              </div>
-              <div class="producto-info">
-                <h3>Torta Red Velvet</h3>
-                <div class="producto-footer">
-                  <span class="precio">$65.000</span>
-                  <button class="cart-add-btn">🛒</button>
-                </div>
-              </div>
+          <div class="producto-fila">
+            <div class="producto-fila-imagen">
+              <img
+                src="../assets/images/products/cappuccino.jpg"
+                alt="Cappuccino"
+              />
             </div>
-
-            <div class="producto-card">
-              <div class="producto-imagen">
-                <img
-                  src="../assets/images/products/fresas.jpg"
-                  alt="Fresas con Crema"
-                />
+            <div class="producto-fila-texto">
+              <span class="producto-fila-categoria">Cafés</span>
+              <h2>Cappuccino Artesanal</h2>
+              <p>
+                Espresso doble con leche vaporizada y un toque de canela,
+                preparado al momento.
+              </p>
+              <div class="producto-fila-footer">
+                <span class="precio">$8.500</span>
                 <button class="fav-btn">♡</button>
-              </div>
-              <div class="producto-info">
-                <h3>Fresas con Crema</h3>
-                <div class="producto-footer">
-                  <span class="precio">$15.500</span>
-                  <button class="cart-add-btn">🛒</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="producto-card">
-              <div class="producto-imagen">
-                <img
-                  src="../assets/images/products/cappuccino.jpg"
-                  alt="Cappuccino"
-                />
-                <button class="fav-btn">♡</button>
-              </div>
-              <div class="producto-info">
-                <h3>Cappuccino</h3>
-                <div class="producto-footer">
-                  <span class="precio">$8.500</span>
-                  <button class="cart-add-btn">🛒</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="producto-card">
-              <div class="producto-imagen">
-                <img
-                  src="../assets/images/products/dos-amores.jpg"
-                  alt="Torta Dos Amores"
-                />
-                <button class="fav-btn">♡</button>
-              </div>
-              <div class="producto-info">
-                <h3>Torta Dos Amores</h3>
-                <div class="producto-footer">
-                  <span class="precio">$68.000</span>
-                  <button class="cart-add-btn">🛒</button>
-                </div>
+                <button class="cart-add-btn">🛒</button>
               </div>
             </div>
           </div>
