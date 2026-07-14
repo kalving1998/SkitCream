@@ -1,0 +1,126 @@
+/*=============================
+      PÁGINA DE AUTENTICACIÓN
+      (login, registro, recuperar)
+=============================*/
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+}
+
+/*=============================
+    COLUMNA IZQUIERDA (visual)
+=============================*/
+
+.auth-visual {
+  flex: 1;
+  background: var(--primary-color);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+.auth-logo img {
+  width: 80px;
+  margin-bottom: 40px;
+}
+
+.auth-visual h2 {
+  font-family: var(--title-font);
+  font-size: 2rem;
+  margin-bottom: 16px;
+  max-width: 380px;
+}
+
+.auth-visual p {
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 360px;
+  line-height: 1.7;
+}
+
+/*=============================
+    COLUMNA DERECHA (formulario)
+=============================*/
+
+.auth-form-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.auth-form-content {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-form-content h1 {
+  font-family: var(--title-font);
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  color: var(--text-light);
+  margin-bottom: 34px;
+}
+
+.auth-subtitle a {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.auth-subtitle a:hover {
+  color: var(--secondary-hover);
+}
+
+/*=============================
+      CAMPOS DEL FORMULARIO
+=============================*/
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.auth-form input {
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-family: var(--text-font);
+  font-size: 15px;
+  margin-bottom: 22px;
+  transition: var(--transition);
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+}
+
+.auth-forgot {
+  align-self: center;
+  font-size: 13px;
+  color: var(--text-light);
+  margin-top: -12px;
+  margin-bottom: 26px;
+}
+
+.auth-forgot:hover {
+  color: var(--secondary-color);
+}
+
+.auth-submit {
+  width: 100%;
+}

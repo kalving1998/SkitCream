@@ -1,0 +1,103 @@
+/*=====================================================
+    RESPONSIVE - TABLETS Y CELULARES GRANDES (768px)
+=====================================================*/
+
+@media (max-width: 768px) {
+  /* ---------- NAVBAR ---------- */
+  .menu {
+    display: none;
+  }
+
+  .navbar {
+    height: auto;
+    padding: 16px 0;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-text {
+    max-width: 100%;
+  }
+
+  .hero-text p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+  }
+
+  /* ---------- FAVORITOS ---------- */
+  .favoritos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* ---------- PRODUCTOS ---------- */
+  .productos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---------- BANNER ---------- */
+  .banner-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 40px 30px;
+  }
+
+  .banner-texto {
+    max-width: 100%;
+  }
+
+  .banner-texto .btn-whatsapp {
+    justify-content: center;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/*=====================================================
+    RESPONSIVE - CELULARES PEQUEÑOS (480px)
+=====================================================*/
+
+@media (max-width: 480px) {
+  /* ---------- HERO ---------- */
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  /* ---------- FAVORITOS ---------- */
+  .favoritos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ---------- PRODUCTOS ---------- */
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}

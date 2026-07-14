@@ -1,0 +1,62 @@
+/*=============================
+        PÁGINA CATEGORÍAS
+=============================*/
+
+.categorias-page {
+  padding: 50px 0 80px;
+}
+
+/*=============================
+    BANNER DE CATEGORÍA ACTIVA
+=============================*/
+
+.categoria-hero {
+  background: var(--primary-color);
+  border-radius: var(--radius);
+  padding: 40px 44px;
+  color: #fff;
+  margin-bottom: 32px;
+}
+
+.categoria-hero h1 {
+  font-family: var(--title-font);
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.categoria-hero p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+}
+
+/*=============================
+      CHIPS DE FILTRO
+=============================*/
+
+.categoria-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 34px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color);
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.chip.active,
+.chip:hover {
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: #fff;
+}
