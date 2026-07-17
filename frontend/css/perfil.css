@@ -1,0 +1,161 @@
+/*=============================
+        PÁGINA PERFIL
+=============================*/
+
+.perfil-page {
+  padding: 50px 0 80px;
+}
+
+.perfil-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/*=============================
+    SIDEBAR (columna izquierda)
+=============================*/
+
+.perfil-sidebar {
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  padding: 30px 24px;
+  text-align: center;
+  position: sticky;
+  top: 20px;
+}
+
+.perfil-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--secondary-color);
+  color: #fff;
+  font-family: var(--title-font);
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+.perfil-nombre {
+  font-family: var(--title-font);
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.perfil-email {
+  color: var(--text-light);
+  font-size: 0.85rem;
+  margin-bottom: 26px;
+}
+
+.perfil-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.perfil-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.perfil-menu-item:hover,
+.perfil-menu-item.active {
+  background: #fff;
+  color: var(--primary-color);
+}
+
+.perfil-menu-item i {
+  width: 16px;
+  color: var(--secondary-color);
+}
+
+.perfil-salir {
+  margin-top: 10px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+}
+
+/*=============================
+    CONTENIDO (columna derecha)
+=============================*/
+
+.perfil-seccion {
+  margin-bottom: 60px;
+}
+
+.perfil-seccion h2 {
+  font-family: var(--title-font);
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  margin-bottom: 22px;
+}
+
+/*=============================
+      TARJETA DE PEDIDO
+=============================*/
+
+.pedido-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.pedido-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 10px;
+}
+
+.pedido-numero {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.pedido-detalle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.pedido-total {
+  font-family: var(--title-font);
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.pedido-estado {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+
+.pedido-estado.entregado {
+  background: #e3f0d9;
+  color: var(--secondary-hover);
+}
+
+.pedido-estado.proceso {
+  background: #fdf1d6;
+  color: #b8860b;
+}

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Mi perfil | SkitCream</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/global.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/hero.css" />
+    <link rel="stylesheet" href="../css/authentication.css" />
+    <link rel="stylesheet" href="../css/productos-destacados.css" />
+    <link rel="stylesheet" href="../css/perfil.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/responsive.css" />
+  </head>
+
+  <body>
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <a href="../index.html" class="logo">
+            <img src="../assets/images/logo/skit.jpg" alt="Logo SkitCream" />
+          </a>
+
+          <ul class="menu">
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="categorias.html">Categorías</a></li>
+            <li><a href="#">Contacto</a></li>
+          </ul>
+
+          <div class="navbar-actions">
+            <button class="icon-btn">👤</button>
+            <button class="icon-btn cart-btn">
+              🛍️
+              <span class="badge">2</span>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ================= PERFIL ================= -->
+
+      <section class="perfil-page">
+        <div class="container">
+          <div class="perfil-layout">
+            <!-- Columna izquierda: menú del perfil -->
+            <aside class="perfil-sidebar">
+              <div class="perfil-avatar">
+                <span>K</span>
+              </div>
+              <h3 class="perfil-nombre">Kelvin</h3>
+              <p class="perfil-email">kelvin@ejemplo.com</p>
+
+              <nav class="perfil-menu">
+                <a href="#datos" class="perfil-menu-item active">
+                  <i class="fa-solid fa-user"></i> Mis datos
+                </a>
+                <a href="#pedidos" class="perfil-menu-item">
+                  <i class="fa-solid fa-box"></i> Mis pedidos
+                </a>
+                <a href="#favoritos" class="perfil-menu-item">
+                  <i class="fa-solid fa-heart"></i> Favoritos
+                </a>
+                <a href="../index.html" class="perfil-menu-item perfil-salir">
+                  <i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión
+                </a>
+              </nav>
+            </aside>
+
+            <!-- Columna derecha: contenido -->
+            <div class="perfil-contenido">
+              <!-- Mis datos -->
+              <div class="perfil-seccion" id="datos">
+                <h2>Mis datos</h2>
+                <form class="auth-form">
+                  <label for="nombre">Nombre completo</label>
+                  <input type="text" id="nombre" value="Kelvin" />
+
+                  <label for="email">Correo electrónico</label>
+                  <input type="email" id="email" value="kelvin@ejemplo.com" />
+
+                  <label for="telefono">Teléfono</label>
+                  <input type="tel" id="telefono" placeholder="300 123 4567" />
+
+                  <label for="direccion">Dirección</label>
+                  <input
+                    type="text"
+                    id="direccion"
+                    placeholder="Calle, número, barrio"
+                  />
+
+                  <button type="submit" class="btn btn-primary auth-submit">
+                    Guardar cambios
+                  </button>
+                </form>
+              </div>
+
+              <!-- Mis pedidos -->
+              <div class="perfil-seccion" id="pedidos">
+                <h2>Mis pedidos</h2>
+
+                <div class="pedido-card">
+                  <div class="pedido-info">
+                    <span class="pedido-numero">Pedido #1042</span>
+                    <span class="pedido-fecha">12 de julio, 2026</span>
+                  </div>
+                  <div class="pedido-detalle">
+                    <span>Torta Red Velvet, Fresas con Crema</span>
+                    <span class="pedido-total">$80.500</span>
+                  </div>
+                  <span class="pedido-estado entregado">Entregado</span>
+                </div>
+
+                <div class="pedido-card">
+                  <div class="pedido-info">
+                    <span class="pedido-numero">Pedido #1038</span>
+                    <span class="pedido-fecha">3 de julio, 2026</span>
+                  </div>
+                  <div class="pedido-detalle">
+                    <span>Cappuccino x2</span>
+                    <span class="pedido-total">$17.000</span>
+                  </div>
+                  <span class="pedido-estado proceso">En camino</span>
+                </div>
+              </div>
+
+              <!-- Favoritos -->
+              <div class="perfil-seccion" id="favoritos">
+                <h2>Mis favoritos</h2>
+
+                <div class="productos-grid">
+                  <div class="producto-card">
+                    <div class="producto-imagen">
+                      <img
+                        src="../assets/images/products/red-velvet.jpg"
+                        alt="Torta Red Velvet"
+                      />
+                      <button class="fav-btn">♥</button>
+                    </div>
+                    <div class="producto-info">
+                      <h3>Torta Red Velvet</h3>
+                      <div class="producto-footer">
+                        <span class="precio">$65.000</span>
+                        <button class="cart-add-btn">🛒</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="producto-card">
+                    <div class="producto-imagen">
+                      <img
+                        src="../assets/images/products/cappuccino.jpg"
+                        alt="Cappuccino"
+                      />
+                      <button class="fav-btn">♥</button>
+                    </div>
+                    <div class="producto-info">
+                      <h3>Cappuccino</h3>
+                      <div class="producto-footer">
+                        <span class="precio">$8.500</span>
+                        <button class="cart-add-btn">🛒</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h3 class="footer-logo">SkitCream</h3>
+            <p>
+              Repostería artesanal hecha con ingredientes reales y mucho cariño.
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Enlaces</h4>
+            <ul>
+              <li><a href="../index.html">Inicio</a></li>
+              <li><a href="productos.html">Productos</a></li>
+              <li><a href="categorias.html">Categorías</a></li>
+              <li><a href="#">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Horario</h4>
+            <p>Lun – Sáb: 8am – 7pm</p>
+            <p>Domingo: 9am – 2pm</p>
+          </div>
+
+          <div class="footer-col">
+            <h4>Síguenos</h4>
+            <div class="footer-social">
+              <a href="#"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2026 SkitCream — Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/app.js"></script>
+  </body>
+</html>
