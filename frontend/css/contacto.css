@@ -1,0 +1,107 @@
+/*=============================
+        PÁGINA CONTACTO
+=============================*/
+
+.contacto-page {
+  padding: 50px 0 80px;
+}
+
+.contacto-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.contacto-header h1 {
+  font-family: var(--title-font);
+  font-size: 2.2rem;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.contacto-header p {
+  color: var(--text-light);
+}
+
+/*=============================
+      LAYOUT DE 2 COLUMNAS
+=============================*/
+
+.contacto-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 50px;
+}
+
+.contacto-form-box {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 34px;
+}
+
+/*=============================
+    COLUMNA DE INFORMACIÓN
+=============================*/
+
+.contacto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.contacto-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.contacto-info-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--surface-color);
+  color: var(--secondary-hover);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contacto-info-item h3 {
+  font-family: var(--title-font);
+  font-size: 1rem;
+  color: var(--primary-color);
+  margin-bottom: 4px;
+}
+
+.contacto-info-item p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/*=============================
+      REDES SOCIALES
+=============================*/
+
+.contacto-social {
+  display: flex;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.contacto-social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.contacto-social a:hover {
+  background: var(--secondary-color);
+}
