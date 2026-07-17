@@ -1,0 +1,161 @@
+/*=============================
+        HERO NOSOTROS
+=============================*/
+
+.nosotros-hero {
+  padding: 60px 0;
+}
+
+.nosotros-hero-content {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.nosotros-hero-texto {
+  flex: 1;
+}
+
+.nosotros-hero-texto h1 {
+  font-family: var(--title-font);
+  font-size: 2.4rem;
+  color: var(--primary-color);
+  line-height: 1.25;
+  margin: 14px 0 18px;
+}
+
+.nosotros-hero-texto p {
+  color: var(--text-light);
+  max-width: 440px;
+}
+
+.eyebrow {
+  color: var(--secondary-hover);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.nosotros-hero-imagen {
+  flex: 1;
+}
+
+.nosotros-hero-imagen img {
+  width: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/*=============================
+      NUESTRA HISTORIA
+=============================*/
+
+.nosotros-historia {
+  padding: 60px 0;
+  background: var(--surface-color);
+}
+
+.nosotros-historia .container {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.nosotros-historia-imagen {
+  flex: 1;
+}
+
+.nosotros-historia-imagen img {
+  width: 100%;
+  border-radius: var(--radius);
+}
+
+.nosotros-historia-texto {
+  flex: 1;
+}
+
+.nosotros-historia-texto h2 {
+  font-family: var(--title-font);
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin: 10px 0 16px;
+}
+
+.nosotros-historia-texto p {
+  color: var(--text-light);
+  max-width: 440px;
+}
+
+/*=============================
+          VALORES
+=============================*/
+
+.nosotros-valores {
+  padding: 70px 0;
+  text-align: center;
+}
+
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.valor-card {
+  background: var(--surface-color);
+  border-radius: var(--radius);
+  padding: 34px 20px;
+  transition: var(--transition);
+}
+
+.valor-card:hover {
+  transform: translateY(-5px);
+}
+
+.valor-icon {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+
+.valor-card h3 {
+  font-family: var(--title-font);
+  font-size: 1.1rem;
+  color: var(--primary-color);
+  margin-bottom: 8px;
+}
+
+.valor-card p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/*=============================
+          NÚMEROS
+=============================*/
+
+.nosotros-numeros {
+  background: var(--primary-color);
+  padding: 50px 0;
+}
+
+.nosotros-numeros-grid {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.numero-item .numero {
+  display: block;
+  font-family: var(--title-font);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  margin-bottom: 6px;
+}
+
+.numero-item p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
