@@ -95,3 +95,10 @@
   font-size: 1.3rem;
   color: var(--primary-color);
 }
+.producto-fila-footer .fav-btn {
+  position: static;
+  width: 36px;
+  height: 36px;
+  background: var(--surface-color);
+  box-shadow: var(--shadow);
+}
