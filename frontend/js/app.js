@@ -1,20 +1,24 @@
-// Buscamos el botón hamburguesa y el menú por su id/clase
+// ================= SESIÓN (simulada con localStorage) =================
+
+// Revisamos si hay sesión activa guardada
+const sesionActiva = localStorage.getItem("sesionActiva") === "true";
+
+// ================= MENÚ HAMBURGUESA =================
+
 const menuToggle = document.getElementById("menuToggle");
 const menu = document.querySelector(".menu");
 
-// Cuando se hace clic en el botón, alternamos la clase "activo" en el menú
-menuToggle.addEventListener("click", function () {
-  menu.classList.toggle("activo");
-});
+if (menuToggle && menu) {
+  menuToggle.addEventListener("click", function () {
+    menu.classList.toggle("activo");
+  });
+}
+
 // ================= FAVORITOS =================
 
-// 1. Traemos la lista guardada de favoritos, o una lista vacía si no hay nada aún
 let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-// 2. Buscamos todos los botones de favorito que existan en la página actual
 const favBtns = document.querySelectorAll(".fav-btn");
 
-// 3. Función que revisa si un id está en la lista y pinta el corazón correcto
 function actualizarCorazon(btn) {
   const id = btn.dataset.id;
   if (favoritos.includes(id)) {
@@ -26,12 +30,16 @@ function actualizarCorazon(btn) {
   }
 }
 
-// 4. Cuando la página carga, pintamos el estado correcto en cada botón
 favBtns.forEach(function (btn) {
   actualizarCorazon(btn);
 
-  // 5. Cuando el usuario hace clic, agregamos o quitamos el id de la lista
   btn.addEventListener("click", function () {
+    if (!sesionActiva) {
+      alert("Debes iniciar sesión para agregar a favoritos.");
+      window.location.href = rutaLogin();
+      return;
+    }
+
     const id = btn.dataset.id;
 
     if (favoritos.includes(id)) {
@@ -42,10 +50,130 @@ favBtns.forEach(function (btn) {
       favoritos.push(id);
     }
 
-    // 6. Guardamos la lista actualizada en localStorage
     localStorage.setItem("favoritos", JSON.stringify(favoritos));
-
-    // 7. Actualizamos el corazón de ese botón
     actualizarCorazon(btn);
+  });
+});
+
+// ================= CARRITO =================
+
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+const cartBtns = document.querySelectorAll(".cart-add-btn");
+
+function actualizarBadge() {
+  const totalUnidades = carrito.reduce(function (total, producto) {
+    return total + producto.cantidad;
+  }, 0);
+
+  const badge = document.querySelector(".badge");
+  if (badge) {
+    badge.textContent = totalUnidades;
+  }
+}
+
+cartBtns.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (!sesionActiva) {
+      alert("Debes iniciar sesión para agregar al carrito.");
+      window.location.href = rutaLogin();
+      return;
+    }
+
+    const id = btn.dataset.id;
+    const nombre = btn.dataset.nombre;
+    const precio = Number(btn.dataset.precio);
+
+    const productoExistente = carrito.find(function (p) {
+      return p.id === id;
+    });
+
+    if (productoExistente) {
+      productoExistente.cantidad += 1;
+    } else {
+      carrito.push({
+        id: id,
+        nombre: nombre,
+        precio: precio,
+        cantidad: 1,
+      });
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    actualizarBadge();
+  });
+});
+
+actualizarBadge();
+
+// ================= LOGIN / REGISTRO =================
+
+const authForm = document.querySelector(".auth-form");
+
+if (
+  authForm &&
+  (window.location.pathname.includes("login") ||
+    window.location.pathname.includes("registro"))
+) {
+  authForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    localStorage.setItem("sesionActiva", "true");
+
+    window.location.href = "categorias.html";
+  });
+}
+
+// ================= CONTROL DE SESIÓN EN NAVBAR Y PÁGINAS =================
+
+const iconoPerfil = document.querySelector(".icon-btn:not(.cart-btn)");
+const iconoCarrito = document.querySelector(".cart-btn");
+
+if (iconoPerfil) {
+  iconoPerfil.style.display = sesionActiva ? "flex" : "none";
+}
+if (iconoCarrito) {
+  iconoCarrito.style.display = sesionActiva ? "flex" : "none";
+}
+
+if (window.location.pathname.includes("categorias") && !sesionActiva) {
+  alert("Debes iniciar sesión para ver los productos.");
+  window.location.href = "login.html";
+}
+
+// Función auxiliar: calcula la ruta correcta a login.html según en qué página estemos
+function rutaLogin() {
+  if (window.location.pathname.includes("/pages/")) {
+    return "login.html";
+  }
+  return "pages/login.html";
+}
+// ================= FILTRO DE CATEGORÍAS =================
+
+const chips = document.querySelectorAll(".chip");
+const productoCards = document.querySelectorAll(".producto-card");
+
+chips.forEach(function (chip) {
+  chip.addEventListener("click", function () {
+    // 1. Quitamos "active" de todos los chips, y se lo ponemos solo al que clickearon
+    chips.forEach(function (c) {
+      c.classList.remove("active");
+    });
+    chip.classList.add("active");
+
+    const categoriaSeleccionada = chip.dataset.categoria;
+
+    // 2. Revisamos cada tarjeta de producto
+    productoCards.forEach(function (card) {
+      const categoriaCard = card.dataset.categoria;
+
+      if (
+        categoriaSeleccionada === "todas" ||
+        categoriaCard === categoriaSeleccionada
+      ) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
   });
 });
