@@ -2,16 +2,25 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const productoRoutes = require("./routes/productoRoutes");
+const usuarioRoutes = require("./routes/usuarioRoutes");
+const pedidoRoutes = require("./routes/pedidoRoutes");
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("¡Servidor funcionando!");
+// Rutas
+app.use("/api/productos", productoRoutes);
+app.use("/api/usuarios", usuarioRoutes);
+app.use("/api/pedidos", pedidoRoutes);
+
+app.get("/", function (req, res) {
+  res.send("Servidor SkitCream funcionando");
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+const PUERTO = process.env.PORT || 3000;
+app.listen(PUERTO, function () {
+  console.log("Servidor corriendo en http://localhost:" + PUERTO);
 });

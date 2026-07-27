@@ -100,6 +100,7 @@ cartBtns.forEach(function (btn) {
 
     localStorage.setItem("carrito", JSON.stringify(carrito));
     actualizarBadge();
+    alert(nombre + " agregado al carrito ✓");
   });
 });
 
@@ -109,17 +110,79 @@ actualizarBadge();
 
 const authForm = document.querySelector(".auth-form");
 
-if (
-  authForm &&
-  (window.location.pathname.includes("login") ||
-    window.location.pathname.includes("registro"))
-) {
+if (authForm && window.location.pathname.includes("registro")) {
   authForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    localStorage.setItem("sesionActiva", "true");
+    const password = document.getElementById("password").value;
+    const password2 = document.getElementById("password2").value;
 
-    window.location.href = "categorias.html";
+    if (password !== password2) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
+
+    const datos = {
+      nombre: document.getElementById("nombre").value,
+      email: document.getElementById("email").value,
+      password: password,
+    };
+
+    fetch("http://localhost:3000/api/usuarios/registro", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        if (data.id) {
+          localStorage.setItem("sesionActiva", "true");
+          localStorage.setItem("usuarioId", data.id);
+          localStorage.setItem("usuarioNombre", datos.nombre);
+          alert("Cuenta creada exitosamente. Bienvenido " + datos.nombre);
+          window.location.href = "login.html";
+        } else {
+          alert(data.mensaje || "Error al registrar");
+        }
+      })
+      .catch(function () {
+        alert("Error de conexion con el servidor");
+      });
+  });
+}
+
+if (authForm && window.location.pathname.includes("login")) {
+  authForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const datos = {
+      email: document.getElementById("email").value,
+      password: document.getElementById("password").value,
+    };
+
+    fetch("http://localhost:3000/api/usuarios/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        if (data.usuario) {
+          localStorage.setItem("sesionActiva", "true");
+          localStorage.setItem("usuarioId", data.usuario.id);
+          localStorage.setItem("usuarioNombre", data.usuario.nombre);
+          window.location.href = "categorias.html";
+        } else {
+          alert(data.mensaje || "Email o password incorrectos");
+        }
+      })
+      .catch(function () {
+        alert("Error de conexion con el servidor");
+      });
   });
 }
 
@@ -177,3 +240,61 @@ chips.forEach(function (chip) {
     });
   });
 });
+// ================= CHECKOUT =================
+
+const checkoutForm = document.querySelector(".checkout-page .auth-form");
+
+if (checkoutForm) {
+  checkoutForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const usuarioId = localStorage.getItem("usuarioId");
+    if (!usuarioId) {
+      alert("Debes iniciar sesión para hacer un pedido");
+      window.location.href = "login.html";
+      return;
+    }
+
+    const datos = {
+      usuario_id: usuarioId,
+      nombre: document.getElementById("nombre").value,
+      telefono: document.getElementById("telefono").value,
+      direccion: document.getElementById("direccion").value,
+      municipio: document.getElementById("municipio").value,
+      departamento: document.getElementById("departamento").value,
+      fecha_entrega: document.getElementById("fecha").value,
+      notas: document.getElementById("notas").value,
+      total: calcularTotal(),
+    };
+
+    fetch("http://localhost:3000/api/pedidos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(datos),
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        if (data.id) {
+          localStorage.removeItem("carrito");
+          alert(
+            "¡Pedido confirmado! Tu pedido #" + data.id + " está en camino.",
+          );
+          window.location.href = "productos.html";
+        } else {
+          alert(data.mensaje || "Error al crear el pedido");
+        }
+      })
+      .catch(function () {
+        alert("Error de conexion con el servidor");
+      });
+  });
+}
+
+function calcularTotal() {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  return carrito.reduce(function (total, item) {
+    return total + item.precio * item.cantidad;
+  }, 0);
+}
