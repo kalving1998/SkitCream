@@ -1,7 +1,9 @@
 // ================= SESIÓN (simulada con localStorage) =================
 
 // Revisamos si hay sesión activa guardada
-const sesionActiva = localStorage.getItem("sesionActiva") === "true";
+function sesionActiva() {
+  return localStorage.getItem("sesionActiva") === "true";
+}
 
 // ================= MENÚ HAMBURGUESA =================
 
@@ -34,7 +36,7 @@ favBtns.forEach(function (btn) {
   actualizarCorazon(btn);
 
   btn.addEventListener("click", function () {
-    if (!sesionActiva) {
+    if (!sesionActiva()) {
       alert("Debes iniciar sesión para agregar a favoritos.");
       window.location.href = rutaLogin();
       return;
@@ -73,7 +75,7 @@ function actualizarBadge() {
 
 cartBtns.forEach(function (btn) {
   btn.addEventListener("click", function () {
-    if (!sesionActiva) {
+    if (!sesionActiva()) {
       alert("Debes iniciar sesión para agregar al carrito.");
       window.location.href = rutaLogin();
       return;
@@ -192,13 +194,28 @@ const iconoPerfil = document.querySelector(".icon-btn:not(.cart-btn)");
 const iconoCarrito = document.querySelector(".cart-btn");
 
 if (iconoPerfil) {
-  iconoPerfil.style.display = sesionActiva ? "flex" : "none";
-}
-if (iconoCarrito) {
-  iconoCarrito.style.display = sesionActiva ? "flex" : "none";
+  iconoPerfil.style.display = sesionActiva() ? "flex" : "none";
+  iconoPerfil.addEventListener("click", function () {
+    if (!sesionActiva) {
+      window.location.href = rutaLogin();
+    }
+  });
 }
 
-if (window.location.pathname.includes("categorias") && !sesionActiva) {
+if (iconoCarrito) {
+  iconoCarrito.style.display = sesionActiva() ? "flex" : "none";
+  iconoCarrito.addEventListener("click", function () {
+    if (!sesionActiva()) {
+      window.location.href = rutaLogin();
+    } else {
+      window.location.href = window.location.pathname.includes("/pages/")
+        ? "carrito.html"
+        : "pages/carrito.html";
+    }
+  });
+}
+
+if (window.location.pathname.includes("categorias") && !sesionActiva()) {
   alert("Debes iniciar sesión para ver los productos.");
   window.location.href = "login.html";
 }
