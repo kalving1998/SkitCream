@@ -119,8 +119,31 @@ if (authForm && window.location.pathname.includes("registro")) {
     const password = document.getElementById("password").value;
     const password2 = document.getElementById("password2").value;
 
+    // Validar nombre - solo letras y espacios
+    const nombre = document.getElementById("nombre").value;
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)) {
+      alert(
+        "El nombre solo puede contener letras, sin números ni caracteres especiales.",
+      );
+      return;
+    }
+
+    // Validar email - formato correcto
+    const email = document.getElementById("email").value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert("El correo electrónico no es válido. Ejemplo: tucorreo@gmail.com");
+      return;
+    }
+
+    // Validar contraseña - mínimo 8 caracteres
+    if (password.length < 8) {
+      alert("La contraseña debe tener mínimo 8 caracteres.");
+      return;
+    }
+
+    // Validar que las contraseñas coincidan
     if (password !== password2) {
-      alert("Las contraseñas no coinciden");
+      alert("Las contraseñas no coinciden.");
       return;
     }
 
@@ -156,6 +179,12 @@ if (authForm && window.location.pathname.includes("registro")) {
 }
 
 if (authForm && window.location.pathname.includes("login")) {
+  // Cargar email guardado si existe
+  const emailGuardado = localStorage.getItem("emailRecordado");
+  if (emailGuardado) {
+    document.getElementById("email").value = emailGuardado;
+    document.getElementById("recordarEmail").checked = true;
+  }
   authForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -174,6 +203,13 @@ if (authForm && window.location.pathname.includes("login")) {
       })
       .then(function (data) {
         if (data.usuario) {
+          // Guardar o borrar email según checkbox
+          const recordar = document.getElementById("recordarEmail").checked;
+          if (recordar) {
+            localStorage.setItem("emailRecordado", datos.email);
+          } else {
+            localStorage.removeItem("emailRecordado");
+          }
           localStorage.setItem("sesionActiva", "true");
           localStorage.setItem("usuarioId", data.usuario.id);
           localStorage.setItem("usuarioNombre", data.usuario.nombre);
@@ -196,8 +232,12 @@ const iconoCarrito = document.querySelector(".cart-btn");
 if (iconoPerfil) {
   iconoPerfil.style.display = sesionActiva() ? "flex" : "none";
   iconoPerfil.addEventListener("click", function () {
-    if (!sesionActiva) {
+    if (!sesionActiva()) {
       window.location.href = rutaLogin();
+    } else {
+      window.location.href = window.location.pathname.includes("/pages/")
+        ? "perfil.html"
+        : "pages/perfil.html";
     }
   });
 }
@@ -218,6 +258,46 @@ if (iconoCarrito) {
 if (window.location.pathname.includes("categorias") && !sesionActiva()) {
   alert("Debes iniciar sesión para ver los productos.");
   window.location.href = "login.html";
+}
+
+// ================= ZONA PRIVADA =================
+
+const paginasPrivadas = ["categorias", "perfil", "carrito"];
+const paginaActual = window.location.pathname;
+const esPaginaPrivada = paginasPrivadas.some(function (p) {
+  return paginaActual.includes(p);
+});
+
+// Redirigir al login si intenta entrar a zona privada sin sesión
+if (esPaginaPrivada && !sesionActiva()) {
+  alert("Debes iniciar sesión para acceder a esta sección.");
+  window.location.href = rutaLogin();
+}
+
+// Advertencia al salir de zona privada hacia zona pública
+if (esPaginaPrivada && sesionActiva()) {
+  const enlacesMenu = document.querySelectorAll(".menu a");
+
+  enlacesMenu.forEach(function (enlace) {
+    const esPrivado = paginasPrivadas.some(function (p) {
+      return enlace.href.includes(p);
+    });
+
+    if (!esPrivado) {
+      enlace.addEventListener("click", function (e) {
+        e.preventDefault();
+        const confirmar = confirm(
+          "Si sales de esta sección deberás iniciar sesión nuevamente para volver. ¿Deseas continuar?",
+        );
+        if (confirmar) {
+          localStorage.removeItem("sesionActiva");
+          localStorage.removeItem("usuarioId");
+          localStorage.removeItem("usuarioNombre");
+          window.location.href = enlace.href;
+        }
+      });
+    }
+  });
 }
 
 // Función auxiliar: calcula la ruta correcta a login.html según en qué página estemos
@@ -314,4 +394,88 @@ function calcularTotal() {
   return carrito.reduce(function (total, item) {
     return total + item.precio * item.cantidad;
   }, 0);
+}
+// ================= PÁGINA DEL CARRITO =================
+
+function renderizarCarrito() {
+  const lista = document.querySelector(".carrito-lista");
+  const subtotalEl = document.querySelector(".resumen-fila span:last-child");
+  const totalEl = document.querySelector(".resumen-total span:last-child");
+
+  if (!lista) return;
+
+  carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  if (carrito.length === 0) {
+    lista.innerHTML =
+      "<p style='padding:20px;color:#777'>Tu carrito está vacío.</p>";
+    if (subtotalEl) subtotalEl.textContent = "$0";
+    if (totalEl) totalEl.textContent = "$0";
+    return;
+  }
+
+  lista.innerHTML = "";
+
+  carrito.forEach(function (item) {
+    const fila = document.createElement("div");
+    fila.classList.add("carrito-item");
+    fila.innerHTML = `
+      <div class="carrito-item-img">
+        <img src="../assets/images/products/${item.id.toLowerCase()}.jpg" alt="${item.nombre}" />
+      </div>
+      <div class="carrito-item-info">
+        <h3>${item.nombre}</h3>
+        <span class="carrito-item-precio">$${item.precio.toLocaleString()}</span>
+      </div>
+      <div class="carrito-item-cantidad">
+        <button class="qty-btn" onclick="cambiarCantidad('${item.id}', -1)">-</button>
+        <span>${item.cantidad}</span>
+        <button class="qty-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
+      </div>
+      <button class="carrito-item-eliminar" onclick="eliminarDelCarrito('${item.id}')">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    `;
+    lista.appendChild(fila);
+  });
+
+  const subtotal = carrito.reduce(function (total, item) {
+    return total + item.precio * item.cantidad;
+  }, 0);
+
+  if (subtotalEl) subtotalEl.textContent = "$" + subtotal.toLocaleString();
+  if (totalEl) totalEl.textContent = "$" + subtotal.toLocaleString();
+}
+
+function cambiarCantidad(id, cambio) {
+  carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const item = carrito.find(function (p) {
+    return p.id === id;
+  });
+  if (item) {
+    item.cantidad += cambio;
+    if (item.cantidad <= 0) {
+      carrito = carrito.filter(function (p) {
+        return p.id !== id;
+      });
+    }
+  }
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarBadge();
+  renderizarCarrito();
+}
+
+function eliminarDelCarrito(id) {
+  carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito = carrito.filter(function (p) {
+    return p.id !== id;
+  });
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  actualizarBadge();
+  renderizarCarrito();
+}
+
+// Renderizar al cargar la página del carrito
+if (window.location.pathname.includes("carrito")) {
+  renderizarCarrito();
 }
