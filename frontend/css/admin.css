@@ -1,0 +1,248 @@
+/*=============================
+    PANEL DE ADMINISTRADOR
+=============================*/
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/*=============================
+        SIDEBAR
+=============================*/
+
+.admin-sidebar {
+  width: 240px;
+  background: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.admin-logo img {
+  width: 50px;
+  border-radius: 50%;
+}
+
+.admin-logo span {
+  color: var(--secondary-color);
+  font-family: var(--title-font);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.admin-nav-item:hover,
+.admin-nav-item.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.admin-nav-item i {
+  width: 18px;
+  color: var(--secondary-color);
+}
+
+.admin-salir {
+  margin-top: auto;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/*=============================
+        CONTENIDO
+=============================*/
+
+.admin-contenido {
+  margin-left: 240px;
+  flex: 1;
+  padding: 40px;
+  background: var(--background-color);
+}
+
+.admin-seccion {
+  display: none;
+}
+
+.admin-seccion.activa {
+  display: block;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.admin-header h1 {
+  font-family: var(--title-font);
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+/*=============================
+        BOTONES
+=============================*/
+
+.btn-admin {
+  background: var(--secondary-color);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: var(--text-font);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-admin:hover {
+  background: var(--secondary-hover);
+}
+
+.btn-cancelar {
+  background: #ccc;
+  color: #333;
+}
+
+.btn-cancelar:hover {
+  background: #bbb;
+}
+
+.btn-editar {
+  background: #2e75b6;
+}
+
+.btn-eliminar {
+  background: #c0392b;
+}
+
+/*=============================
+        FORMULARIO
+=============================*/
+
+.admin-form {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+}
+
+.admin-form h3 {
+  font-family: var(--title-font);
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.admin-form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--primary-color);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.admin-form input,
+.admin-form select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: var(--text-font);
+  font-size: 14px;
+}
+
+.admin-form-botones {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/*=============================
+        TABLAS
+=============================*/
+
+.admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.admin-tabla th {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.admin-tabla td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.admin-tabla tr:hover td {
+  background: var(--surface-color);
+}
+
+.badge-estado {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.badge-pendiente {
+  background: #fdf1d6;
+  color: #b8860b;
+}
+
+.badge-entregado {
+  background: #e3f0d9;
+  color: var(--secondary-hover);
+}
+
+.badge-proceso {
+  background: #dbeafe;
+  color: #1e40af;
+}

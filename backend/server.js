@@ -5,6 +5,7 @@ require("dotenv").config();
 const productoRoutes = require("./routes/productoRoutes");
 const usuarioRoutes = require("./routes/usuarioRoutes");
 const pedidoRoutes = require("./routes/pedidoRoutes");
+const categoriaRoutes = require("./routes/categoriaRoutes");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use("/api/productos", productoRoutes);
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/pedidos", pedidoRoutes);
+app.use("/api/categorias", categoriaRoutes);
 
 app.get("/", function (req, res) {
   res.send("Servidor SkitCream funcionando");

@@ -87,6 +87,7 @@ class UsuarioController {
           id: usuario.id,
           nombre: usuario.nombre,
           email: usuario.email,
+          rol: usuario.rol,
         },
       });
     });
