@@ -81,8 +81,149 @@
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
 
+  /* ---------- PÁGINA PRODUCTOS (fila) ---------- */
+  .producto-fila,
+  .producto-fila:nth-child(even) {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .producto-fila-imagen {
+    width: 100%;
+    height: 220px;
+  }
+
+  .producto-fila-texto p {
+    max-width: 100%;
+  }
+
+  /* ---------- PERFIL ---------- */
+  .perfil-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-sidebar {
+    position: static;
+  }
+
+  /* ---------- NOSOTROS ---------- */
+  .nosotros-hero-content,
+  .nosotros-historia .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nosotros-hero-texto p,
+  .nosotros-historia-texto p {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .valores-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nosotros-numeros-grid {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  /* ---------- ADMIN: SIDEBAR ---------- */
+  .admin-sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px;
+  }
+
+  .admin-logo {
+    margin-bottom: 0;
+  }
+
+  .admin-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .admin-salir {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  /* ---------- ADMIN: CONTENIDO ---------- */
+  .admin-contenido {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .admin-form-botones {
+    flex-wrap: wrap;
+  }
+
+  /* ---------- ADMIN: TABLAS ---------- */
+  .admin-tabla {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  /* ---------- AUTH (LOGIN/REGISTRO) ---------- */
+  .auth-page {
+    flex-direction: column;
+  }
+
+  .auth-page {
+    flex-direction: column;
+  }
+
+  .auth-visual {
+    padding: 30px 20px;
+    text-align: center;
+  }
+
+  .auth-visual h2,
+  .auth-visual p {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .auth-form-box {
+    padding: 30px 20px;
+  }
+  /* ---------- CARRITO ---------- */
+  .carrito-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .carrito-resumen {
+    position: static;
+  }
+
+  .carrito-item {
+    flex-wrap: wrap;
+  }
+
+  .carrito-item-cantidad {
+    order: 3;
+  }
+
+  /* ---------- CHECKOUT ---------- */
+  .checkout-form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
 /*=====================================================
     RESPONSIVE - CELULARES PEQUEÑOS (480px)
 =====================================================*/
@@ -115,5 +256,55 @@
   /* ---------- FOOTER ---------- */
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .valores-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nosotros-hero-texto h1 {
+    font-size: 1.8rem;
+  }
+
+  .pedido-info,
+  .pedido-detalle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  /* ---------- ADMIN ---------- */
+  .admin-nav-item {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+
+  .admin-tabla th,
+  .admin-tabla td {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+
+  /* ---------- AUTH ---------- */
+  .auth-form-content h1 {
+    font-size: 1.6rem;
+  }
+  /* ---------- CARRITO ---------- */
+  .carrito-item {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .carrito-item-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .carrito-titulo {
+    font-size: 1.5rem;
+  }
+
+  /* ---------- CHECKOUT ---------- */
+  .checkout-form-box {
+    padding: 20px;
   }
 }

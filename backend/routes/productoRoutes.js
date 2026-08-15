@@ -5,6 +5,9 @@ const ProductoController = require("../controllers/ProductoController");
 // CONSULTAR todos los productos
 router.get("/", ProductoController.consultarTodos);
 
+// CONSULTAR productos destacados
+router.get("/destacados", ProductoController.consultarDestacados);
+
 // CONSULTAR un producto por id
 router.get("/:id", ProductoController.consultarPorId);
 

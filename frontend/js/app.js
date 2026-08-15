@@ -377,6 +377,35 @@ if (checkoutForm) {
       return;
     }
 
+    // Validar campos obligatorios
+    if (
+      !document.getElementById("nombre").value ||
+      !document.getElementById("telefono").value ||
+      !document.getElementById("direccion").value ||
+      !document.getElementById("municipio").value ||
+      !document.getElementById("departamento").value ||
+      !document.getElementById("fecha").value
+    ) {
+      alert("Por favor completa todos los campos obligatorios.");
+      return;
+    }
+    var telefonoVal = document
+      .getElementById("telefono")
+      .value.replace(/\D/g, "");
+    if (telefonoVal.length !== 10) {
+      alert("El teléfono debe tener 10 dígitos. Ej: 3001234567");
+      return;
+    }
+
+    // Validar que la fecha no sea anterior a hoy
+    var fechaVal = new Date(document.getElementById("fecha").value);
+    var hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    if (fechaVal < hoy) {
+      alert("La fecha de entrega no puede ser una fecha pasada.");
+      return;
+    }
+
     const datos = {
       usuario_id: usuarioId,
       nombre: document.getElementById("nombre").value,
@@ -426,7 +455,7 @@ if (checkoutForm) {
           alert(
             "¡Pedido confirmado! Tu pedido #" + data.id + " está en camino.",
           );
-          window.location.href = "productos.html";
+          window.location.href = "categorias.html";
         } else {
           alert(data.mensaje || "Error al crear el pedido");
         }
@@ -587,6 +616,28 @@ if (window.location.pathname.includes("perfil")) {
           nombre: document.getElementById("nombre").value,
           email: document.getElementById("email").value,
         };
+        // Cambiar contraseña si llenó los campos
+        var passwordActual = document.getElementById("passwordActual").value;
+        var passwordNueva = document.getElementById("passwordNueva").value;
+        var passwordConfirmar =
+          document.getElementById("passwordConfirmar").value;
+
+        if (passwordActual || passwordNueva || passwordConfirmar) {
+          if (!passwordActual || !passwordNueva || !passwordConfirmar) {
+            alert("Completa todos los campos de contraseña.");
+            return;
+          }
+          if (passwordNueva.length < 8) {
+            alert("La nueva contraseña debe tener mínimo 8 caracteres.");
+            return;
+          }
+          if (passwordNueva !== passwordConfirmar) {
+            alert("Las contraseñas nuevas no coinciden.");
+            return;
+          }
+          datos.passwordActual = passwordActual;
+          datos.passwordNueva = passwordNueva;
+        }
 
         fetch("http://localhost:3000/api/usuarios/" + usuarioId, {
           method: "PUT",
@@ -612,33 +663,6 @@ if (window.location.pathname.includes("perfil")) {
 // ================= FAVORITOS EN PERFIL =================
 
 if (window.location.pathname.includes("perfil")) {
-  var todosLosProductos = [
-    {
-      id: "Red-velvet",
-      nombre: "Torta Red Velvet",
-      precio: 65000,
-      imagen: "red-velvet.jpg",
-    },
-    {
-      id: "Fresas-con-crema",
-      nombre: "Fresas con Crema",
-      precio: 15500,
-      imagen: "fresas.jpg",
-    },
-    {
-      id: "Cappuccino",
-      nombre: "Cappuccino",
-      precio: 8500,
-      imagen: "cappuccino.jpg",
-    },
-    {
-      id: "Torta-Dos-Amores",
-      nombre: "Torta Dos Amores",
-      precio: 68000,
-      imagen: "dos-amores.jpg",
-    },
-  ];
-
   function renderizarFavoritosPerfil() {
     var grid = document.getElementById("favoritosGrid");
     if (!grid) return;
@@ -651,71 +675,81 @@ if (window.location.pathname.includes("perfil")) {
       return;
     }
 
-    grid.innerHTML = "";
+    // Cargar productos desde la API
+    fetch("http://localhost:3000/api/productos")
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (productos) {
+        grid.innerHTML = "";
 
-    todosLosProductos.forEach(function (producto) {
-      if (!favoritosActuales.includes(producto.id)) return;
+        var hayFavoritos = false;
 
-      var card = document.createElement("div");
-      card.classList.add("producto-card");
-      card.id = "fav-card-" + producto.id;
-      card.innerHTML = `
-        <div class="producto-imagen">
-          <img src="../assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
-          <button class="fav-btn activo" data-id="${producto.id}">♥</button>
-        </div>
-        <div class="producto-info">
-          <h3>${producto.nombre}</h3>
-          <div class="producto-footer">
-            <span class="precio">$${producto.precio.toLocaleString()}</span>
-            <button class="cart-add-btn" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">🛒</button>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
+        productos.forEach(function (producto) {
+          if (!favoritosActuales.includes(String(producto.id))) return;
 
-      // Botón de favorito — al hacer clic quita de favoritos y desaparece
-      card.querySelector(".fav-btn").addEventListener("click", function () {
-        favoritos = favoritos.filter(function (favId) {
-          return favId !== producto.id;
+          hayFavoritos = true;
+          var card = document.createElement("div");
+          card.classList.add("producto-card");
+          card.id = "fav-card-" + producto.id;
+          card.innerHTML = `
+            <div class="producto-imagen">
+              <img src="../assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+              <button class="fav-btn activo" data-id="${producto.id}">♥</button>
+            </div>
+            <div class="producto-info">
+              <h3>${producto.nombre}</h3>
+              <div class="producto-footer">
+                <span class="precio">$${Number(producto.precio).toLocaleString()}</span>
+                <button class="cart-add-btn" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">🛒</button>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+
+          // Quitar de favoritos al hacer clic en corazón
+          card.querySelector(".fav-btn").addEventListener("click", function () {
+            favoritos = favoritos.filter(function (f) {
+              return f !== String(producto.id);
+            });
+            localStorage.setItem("favoritos", JSON.stringify(favoritos));
+            document.getElementById("fav-card-" + producto.id).remove();
+
+            var restantes = JSON.parse(localStorage.getItem("favoritos")) || [];
+            if (restantes.length === 0) {
+              grid.innerHTML =
+                "<p style='color:#777;padding:20px 0'>No tienes favoritos aún. Ve a Categorías para agregar.</p>";
+            }
+          });
+
+          // Agregar al carrito
+          card
+            .querySelector(".cart-add-btn")
+            .addEventListener("click", function () {
+              var existente = carrito.find(function (p) {
+                return p.id === String(producto.id);
+              });
+              if (existente) {
+                existente.cantidad += 1;
+              } else {
+                carrito.push({
+                  id: String(producto.id),
+                  nombre: producto.nombre,
+                  precio: Number(producto.precio),
+                  cantidad: 1,
+                });
+              }
+              localStorage.setItem("carrito", JSON.stringify(carrito));
+              actualizarBadge();
+              alert(producto.nombre + " agregado al carrito ✓");
+            });
         });
-        localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        document.getElementById("fav-card-" + producto.id).remove();
 
-        var favoritosActualizados =
-          JSON.parse(localStorage.getItem("favoritos")) || [];
-        if (favoritosActualizados.length === 0) {
+        if (!hayFavoritos) {
           grid.innerHTML =
             "<p style='color:#777;padding:20px 0'>No tienes favoritos aún. Ve a Categorías para agregar.</p>";
         }
       });
-
-      // Botón de carrito
-      card
-        .querySelector(".cart-add-btn")
-        .addEventListener("click", function () {
-          var id = producto.id;
-          var nombre = producto.nombre;
-          var precio = producto.precio;
-
-          var productoExistente = carrito.find(function (p) {
-            return p.id === id;
-          });
-          if (productoExistente) {
-            productoExistente.cantidad += 1;
-          } else {
-            carrito.push({
-              id: id,
-              nombre: nombre,
-              precio: precio,
-              cantidad: 1,
-            });
-          }
-          localStorage.setItem("carrito", JSON.stringify(carrito));
-          actualizarBadge();
-          alert(nombre + " agregado al carrito ✓");
-        });
-    });
   }
 
   renderizarFavoritosPerfil();
@@ -732,9 +766,7 @@ if (window.location.pathname.includes("categorias")) {
       .then(function (productos) {
         var grid = document.getElementById("productosGrid");
         if (!grid) return;
-
         grid.innerHTML = "";
-
         productos.forEach(function (producto) {
           var esFavorito = favoritos.includes(String(producto.id));
           var card = document.createElement("div");
@@ -751,18 +783,12 @@ if (window.location.pathname.includes("categorias")) {
               <h3>${producto.nombre}</h3>
               <div class="producto-footer">
                 <span class="precio">$${Number(producto.precio).toLocaleString()}</span>
-                <button class="cart-add-btn" 
-                  data-id="${producto.id}" 
-                  data-nombre="${producto.nombre}" 
-                  data-precio="${producto.precio}">
-                  🛒
-                </button>
+                <button class="cart-add-btn" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">🛒</button>
               </div>
             </div>
           `;
           grid.appendChild(card);
 
-          // Botón favorito
           card.querySelector(".fav-btn").addEventListener("click", function () {
             if (!sesionActiva()) {
               alert("Debes iniciar sesión para agregar a favoritos.");
@@ -785,7 +811,6 @@ if (window.location.pathname.includes("categorias")) {
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
           });
 
-          // Botón carrito
           card
             .querySelector(".cart-add-btn")
             .addEventListener("click", function () {
@@ -813,7 +838,6 @@ if (window.location.pathname.includes("categorias")) {
             });
         });
 
-        // Aplicar filtros de chips después de cargar
         aplicarFiltroChips();
       });
   }
@@ -842,5 +866,285 @@ if (window.location.pathname.includes("categorias")) {
     });
   }
 
-  cargarProductosCategorias();
+  // Cargar chips desde API y luego productos
+  fetch("http://localhost:3000/api/categorias")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (categorias) {
+      var chipsContainer = document.getElementById("chipsContainer");
+      if (chipsContainer) {
+        chipsContainer.innerHTML = "";
+        var chipTodas = document.createElement("span");
+        chipTodas.classList.add("chip", "active");
+        chipTodas.setAttribute("data-categoria", "Todas");
+        chipTodas.textContent = "Todas";
+        chipsContainer.appendChild(chipTodas);
+        categorias.forEach(function (c) {
+          var chip = document.createElement("span");
+          chip.classList.add("chip");
+          chip.setAttribute("data-categoria", c.nombre);
+          chip.textContent = c.nombre;
+          chipsContainer.appendChild(chip);
+        });
+      }
+      cargarProductosCategorias();
+    });
+}
+// ================= RECUPERAR CONTRASEÑA =================
+
+if (window.location.pathname.includes("recuperar")) {
+  emailjs.init("7HfEHkc6rXKVOUS6Y");
+
+  var recuperarForm = document.querySelector(".auth-form");
+  if (recuperarForm) {
+    recuperarForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("email").value;
+
+      if (!email) {
+        alert("Por favor ingresa tu correo electrónico.");
+        return;
+      }
+
+      // Verificar si el email existe
+      fetch("http://localhost:3000/api/usuarios")
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (usuarios) {
+          var usuario = usuarios.find(function (u) {
+            return u.email === email;
+          });
+
+          if (!usuario) {
+            alert("❌ No encontramos una cuenta con ese correo.");
+            return;
+          }
+
+          // Generar contraseña temporal
+          var passwordTemporal =
+            "Skit" + Math.random().toString(36).slice(2, 8).toUpperCase();
+
+          // Actualizar contraseña en la base de datos
+          fetch("http://localhost:3000/api/usuarios/" + usuario.id + "/reset", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ passwordTemporal: passwordTemporal }),
+          })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              // Enviar correo con EmailJS
+              return emailjs.send("service_odmjoxv", "template_rn5m35o", {
+                to_email: email,
+                nombre: usuario.nombre,
+                password_temporal: passwordTemporal,
+              });
+            })
+            .then(function () {
+              alert(
+                "✅ Correo enviado con éxito a " +
+                  email +
+                  ". Revisa tu bandeja de entrada.",
+              );
+              window.location.href = "login.html";
+            })
+            .catch(function (error) {
+              console.log(error);
+              alert("Error al enviar el correo. Intenta de nuevo.");
+            });
+        });
+    });
+  }
+}
+// ================= CERRAR SESIÓN =================
+var btnCerrarSesion = document.querySelector(".perfil-salir");
+if (btnCerrarSesion) {
+  btnCerrarSesion.addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.removeItem("sesionActiva");
+    localStorage.removeItem("usuarioId");
+    localStorage.removeItem("usuarioNombre");
+    localStorage.removeItem("usuarioRol");
+    localStorage.removeItem("passwordTemporal");
+    localStorage.removeItem("carrito");
+    localStorage.removeItem("favoritos");
+    window.location.replace("../index.html");
+  });
+}
+// ================= CARGAR PRODUCTOS EN PÁGINA PRODUCTOS =================
+
+if (window.location.pathname.includes("productos")) {
+  fetch("http://localhost:3000/api/productos")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (productos) {
+      var lista = document.getElementById("productosLista");
+      if (!lista) return;
+      lista.innerHTML = "";
+
+      productos.forEach(function (producto, index) {
+        var esFavorito = favoritos.includes(String(producto.id));
+        var fila = document.createElement("div");
+        fila.classList.add("producto-fila");
+
+        var contenido = `
+          <div class="producto-fila-imagen">
+            <img src="../assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+          </div>
+          <div class="producto-fila-texto">
+            <span class="producto-fila-categoria">${producto.categoria}</span>
+            <h2>${producto.nombre}</h2>
+            <p style="max-width:420px; overflow-wrap:break-word; word-break:break-word;">${producto.descripcion || ""}</p>
+            <div class="producto-fila-footer">
+              <span class="precio">$${Number(producto.precio).toLocaleString("es-CO")}</span>
+              <button class="fav-btn ${esFavorito ? "activo" : ""}" data-id="${producto.id}">
+                ${esFavorito ? "♥" : "♡"}
+              </button>
+              <button class="cart-add-btn" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">🛒</button>
+            </div>
+          </div>
+        `;
+        fila.innerHTML = contenido;
+        lista.appendChild(fila);
+
+        // Botón favorito
+        fila.querySelector(".fav-btn").addEventListener("click", function () {
+          if (!sesionActiva()) {
+            alert("Debes iniciar sesión para agregar a favoritos.");
+            window.location.href = rutaLogin();
+            return;
+          }
+          var id = String(producto.id);
+          var btn = this;
+          if (favoritos.includes(id)) {
+            favoritos = favoritos.filter(function (f) {
+              return f !== id;
+            });
+            btn.textContent = "♡";
+            btn.classList.remove("activo");
+          } else {
+            favoritos.push(id);
+            btn.textContent = "♥";
+            btn.classList.add("activo");
+          }
+          localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        });
+
+        // Botón carrito
+        fila
+          .querySelector(".cart-add-btn")
+          .addEventListener("click", function () {
+            if (!sesionActiva()) {
+              alert("Debes iniciar sesión para agregar al carrito.");
+              window.location.href = rutaLogin();
+              return;
+            }
+            var existente = carrito.find(function (p) {
+              return p.id === String(producto.id);
+            });
+            if (existente) {
+              existente.cantidad += 1;
+            } else {
+              carrito.push({
+                id: String(producto.id),
+                nombre: producto.nombre,
+                precio: Number(producto.precio),
+                cantidad: 1,
+              });
+            }
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarBadge();
+            alert(producto.nombre + " agregado al carrito ✓");
+          });
+      });
+    });
+}
+// ================= PRODUCTOS DESTACADOS (INDEX) =================
+
+var destacadosGrid = document.getElementById("destacadosGrid");
+if (destacadosGrid) {
+  fetch("http://localhost:3000/api/productos/destacados")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (productos) {
+      destacadosGrid.innerHTML = "";
+      productos.forEach(function (producto) {
+        var esFavorito = favoritos.includes(String(producto.id));
+        var card = document.createElement("div");
+        card.classList.add("producto-card");
+        card.innerHTML = `
+          <div class="producto-imagen">
+            <img src="assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+            <button class="fav-btn ${esFavorito ? "activo" : ""}" data-id="${producto.id}">
+              ${esFavorito ? "♥" : "♡"}
+            </button>
+          </div>
+          <div class="producto-info">
+            <h3>${producto.nombre}</h3>
+            <div class="producto-footer">
+              <span class="precio">$${Number(producto.precio).toLocaleString("es-CO")}</span>
+              <button class="cart-add-btn" data-id="${producto.id}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">🛒</button>
+            </div>
+          </div>
+        `;
+        destacadosGrid.appendChild(card);
+
+        card.querySelector(".fav-btn").addEventListener("click", function () {
+          if (!sesionActiva()) {
+            alert("Debes iniciar sesión para agregar a favoritos.");
+            window.location.href = rutaLogin();
+            return;
+          }
+          var id = String(producto.id);
+          var btn = this;
+          if (favoritos.includes(id)) {
+            favoritos = favoritos.filter(function (f) {
+              return f !== id;
+            });
+            btn.textContent = "♡";
+            btn.classList.remove("activo");
+          } else {
+            favoritos.push(id);
+            btn.textContent = "♥";
+            btn.classList.add("activo");
+          }
+          localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        });
+
+        card
+          .querySelector(".cart-add-btn")
+          .addEventListener("click", function () {
+            if (!sesionActiva()) {
+              alert("Debes iniciar sesión para agregar al carrito.");
+              window.location.href = rutaLogin();
+              return;
+            }
+            var existente = carrito.find(function (p) {
+              return p.id === String(producto.id);
+            });
+            if (existente) {
+              existente.cantidad += 1;
+            } else {
+              carrito.push({
+                id: String(producto.id),
+                nombre: producto.nombre,
+                precio: Number(producto.precio),
+                cantidad: 1,
+              });
+            }
+            localStorage.setItem("carrito", JSON.stringify(carrito));
+            actualizarBadge();
+            alert(producto.nombre + " agregado al carrito ✓");
+          });
+      });
+    })
+    .catch(function () {
+      destacadosGrid.innerHTML =
+        "<p style='color:#777'>No se pudieron cargar los productos destacados.</p>";
+    });
 }

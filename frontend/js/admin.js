@@ -1,6 +1,25 @@
 // ================= PANEL DE ADMINISTRADOR =================
 
 const API = "http://localhost:3000/api";
+var productoImagenActual = "";
+
+// ================= CARGAR CATEGORÍAS EN SELECTOR =================
+function cargarCategoriasSelector() {
+  fetch(API + "/categorias")
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (categorias) {
+      var select = document.getElementById("productoCategoria");
+      select.innerHTML = "";
+      categorias.forEach(function (c) {
+        var option = document.createElement("option");
+        option.value = c.nombre;
+        option.textContent = c.nombre;
+        select.appendChild(option);
+      });
+    });
+}
 
 // ================= NAVEGACIÓN =================
 
@@ -30,13 +49,14 @@ function cargarProductos() {
     .then(function (productos) {
       var html = "<table class='admin-tabla'>";
       html +=
-        "<tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Categoría</th><th>Acciones</th></tr>";
+        "<tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Categoría</th><th>Destacado</th><th>Acciones</th></tr>";
       productos.forEach(function (p) {
         html += "<tr>";
         html += "<td>" + p.id + "</td>";
         html += "<td>" + p.nombre + "</td>";
         html += "<td>$" + Number(p.precio).toLocaleString() + "</td>";
         html += "<td>" + p.categoria + "</td>";
+        html += "<td>" + (p.destacado ? "⭐" : "—") + "</td>";
         html += "<td style='display:flex;gap:8px;'>";
         html +=
           "<button class='btn-admin btn-editar' onclick='editarProducto(" +
@@ -54,6 +74,7 @@ function cargarProductos() {
 }
 
 function mostrarFormProducto() {
+  cargarCategoriasSelector();
   document.getElementById("formProducto").style.display = "block";
   document.getElementById("formProductoTitulo").textContent =
     "Agregar producto";
@@ -61,7 +82,9 @@ function mostrarFormProducto() {
   document.getElementById("productoNombre").value = "";
   document.getElementById("productoDescripcion").value = "";
   document.getElementById("productoPrecio").value = "";
-  document.getElementById("productoImagen").value = "";
+  productoImagenActual = "";
+  document.getElementById("imagenStatus").textContent = "";
+  document.getElementById("productoDestacado").checked = false;
 }
 
 function cancelarFormProducto() {
@@ -69,6 +92,7 @@ function cancelarFormProducto() {
 }
 
 function editarProducto(p) {
+  cargarCategoriasSelector();
   document.getElementById("formProducto").style.display = "block";
   document.getElementById("formProductoTitulo").textContent = "Editar producto";
   document.getElementById("productoId").value = p.id;
@@ -76,7 +100,11 @@ function editarProducto(p) {
   document.getElementById("productoDescripcion").value = p.descripcion;
   document.getElementById("productoPrecio").value = p.precio;
   document.getElementById("productoCategoria").value = p.categoria;
-  document.getElementById("productoImagen").value = p.imagen;
+  productoImagenActual = p.imagen;
+  document.getElementById("imagenStatus").textContent = p.imagen
+    ? "Imagen actual: " + p.imagen
+    : "";
+  document.getElementById("productoDestacado").checked = !!p.destacado;
 }
 
 function guardarProducto() {
@@ -86,7 +114,8 @@ function guardarProducto() {
     descripcion: document.getElementById("productoDescripcion").value,
     precio: document.getElementById("productoPrecio").value,
     categoria: document.getElementById("productoCategoria").value,
-    imagen: document.getElementById("productoImagen").value,
+    imagen: productoImagenActual,
+    destacado: document.getElementById("productoDestacado").checked,
   };
 
   if (!datos.nombre || !datos.precio) {
@@ -219,6 +248,7 @@ function cambiarEstado(id, estado) {
 
 // ================= INICIALIZAR =================
 cargarProductos();
+cargarCategoriasSelector();
 // ================= CERRAR SESIÓN ADMIN =================
 document.querySelector(".admin-salir").addEventListener("click", function (e) {
   e.preventDefault();
@@ -323,3 +353,32 @@ function eliminarCategoria(id) {
       cargarCategorias();
     });
 }
+// ================= SUBIR IMAGEN =================
+document
+  .getElementById("imagenArchivo")
+  .addEventListener("change", function () {
+    var archivo = this.files[0];
+    if (!archivo) return;
+
+    var formData = new FormData();
+    formData.append("imagen", archivo);
+
+    document.getElementById("imagenStatus").textContent = "Subiendo...";
+
+    fetch(API + "/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then(function (res) {
+        return res.json();
+      })
+      .then(function (data) {
+        productoImagenActual = data.archivo;
+        document.getElementById("imagenStatus").textContent =
+          "✅ Imagen subida: " + data.archivo;
+      })
+      .catch(function () {
+        document.getElementById("imagenStatus").textContent =
+          "❌ Error al subir la imagen";
+      });
+  });

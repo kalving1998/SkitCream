@@ -9,8 +9,7 @@ class Usuario {
 
   // CONSULTAR un usuario por id
   static consultarPorId(id, callback) {
-    const consulta =
-      "SELECT id, nombre, email, created_at FROM usuarios WHERE id = ?";
+    const consulta = "SELECT * FROM usuarios WHERE id = ?";
     conexion.query(consulta, [id], callback);
   }
 
@@ -32,6 +31,13 @@ class Usuario {
   static actualizar(id, datos, callback) {
     const consulta = "UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?";
     const valores = [datos.nombre, datos.email, id];
+    conexion.query(consulta, valores, callback);
+  }
+  // ACTUALIZAR usuario con contraseña
+  static actualizarConPassword(id, datos, callback) {
+    const consulta =
+      "UPDATE usuarios SET nombre = ?, email = ?, password = ? WHERE id = ?";
+    const valores = [datos.nombre, datos.email, datos.password, id];
     conexion.query(consulta, valores, callback);
   }
 

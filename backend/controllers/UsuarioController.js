@@ -92,18 +92,55 @@ class UsuarioController {
       });
     });
   }
-
-  // ACTUALIZAR un usuario
+  // actualizar  contraseña//
   static actualizar(req, res) {
     const id = req.params.id;
     const datos = req.body;
-    Usuario.actualizar(id, datos, function (error, resultado) {
-      if (error) {
-        res.status(500).json({ mensaje: "Error al actualizar usuario", error });
-        return;
-      }
-      res.json({ mensaje: "Usuario actualizado correctamente" });
-    });
+
+    // Si viene cambio de contraseña
+    if (datos.passwordNueva) {
+      Usuario.consultarPorId(id, function (error, usuarios) {
+        if (error || !usuarios[0]) {
+          res.status(500).json({ mensaje: "Error al buscar usuario" });
+          return;
+        }
+        var usuario = usuarios[0];
+        var passwordCorrecta = bcrypt.compareSync(
+          datos.passwordActual,
+          usuarios[0].password,
+        );
+
+        if (!passwordCorrecta) {
+          res
+            .status(401)
+            .json({ mensaje: "La contraseña actual es incorrecta" });
+          return;
+        }
+        var passwordEncriptada = bcrypt.hashSync(datos.passwordNueva, 10);
+        datos.password = passwordEncriptada;
+        Usuario.actualizarConPassword(id, datos, function (error, resultado) {
+          if (error) {
+            res
+              .status(500)
+              .json({ mensaje: "Error al actualizar usuario", error });
+            return;
+          }
+          res.json({
+            mensaje: "Perfil y contraseña actualizados correctamente",
+          });
+        });
+      });
+    } else {
+      Usuario.actualizar(id, datos, function (error, resultado) {
+        if (error) {
+          res
+            .status(500)
+            .json({ mensaje: "Error al actualizar usuario", error });
+          return;
+        }
+        res.json({ mensaje: "Usuario actualizado correctamente" });
+      });
+    }
   }
 
   // ELIMINAR un usuario
@@ -117,6 +154,31 @@ class UsuarioController {
       res.json({ mensaje: "Usuario eliminado correctamente" });
     });
   }
-}
 
+  //recuperar contraseña
+  static resetPassword(req, res) {
+    const id = req.params.id;
+    const { passwordTemporal } = req.body;
+    console.log("Reset password - ID:", id, "Password:", passwordTemporal);
+    const passwordEncriptada = bcrypt.hashSync(passwordTemporal, 10);
+    console.log("Password encriptada:", passwordEncriptada);
+
+    const consulta = "UPDATE usuarios SET password = ? WHERE id = ?";
+    const conexion = require("../config/db");
+    conexion.query(
+      consulta,
+      [passwordEncriptada, id],
+      function (error, resultado) {
+        if (error) {
+          res
+            .status(500)
+            .json({ mensaje: "Error al resetear contraseña", error });
+          return;
+        }
+        console.log("Filas afectadas:", resultado.affectedRows);
+        res.json({ mensaje: "Contraseña temporal generada correctamente" });
+      },
+    );
+  }
+}
 module.exports = UsuarioController;

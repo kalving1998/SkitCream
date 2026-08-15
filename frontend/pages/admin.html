@@ -85,27 +85,39 @@
               placeholder="Nombre del producto"
             />
             <label>Descripción</label>
-            <input
-              type="text"
+            <textarea
               id="productoDescripcion"
-              placeholder="Descripción"
-            />
+              placeholder="Descripción del producto"
+              rows="4"
+              style="resize: vertical"
+            ></textarea>
+
             <label>Precio</label>
             <input type="number" id="productoPrecio" placeholder="Precio" />
             <label>Categoría</label>
-            <select id="productoCategoria">
-              <option value="Tortas">Tortas</option>
-              <option value="Fresas">Fresas con crema</option>
-              <option value="Postres">Postres</option>
-              <option value="Cafes">Cafés</option>
-              <option value="Bebidas">Bebidas</option>
-            </select>
-            <label>Imagen (nombre del archivo)</label>
-            <input
-              type="text"
-              id="productoImagen"
-              placeholder="Ej: red-velvet.jpg"
-            />
+            <select id="productoCategoria"></select>
+            <label>Imagen</label>
+            <div style="display: flex; gap: 10px; align-items: center">
+              <input
+                type="file"
+                id="imagenArchivo"
+                accept="image/*"
+                style="display: none"
+              />
+              <label>
+                <input type="checkbox" id="productoDestacado" />
+                Mostrar en productos destacados (página principal)
+              </label>
+
+              <button
+                type="button"
+                class="btn-admin"
+                onclick="document.getElementById('imagenArchivo').click()"
+              >
+                <i class="fa-solid fa-upload"></i> Subir imagen
+              </button>
+            </div>
+            <small id="imagenStatus" style="color: #777"></small>
             <div class="admin-form-botones">
               <button class="btn-admin" onclick="guardarProducto()">
                 Guardar

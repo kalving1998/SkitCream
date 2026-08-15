@@ -67,6 +67,18 @@ class ProductoController {
       res.json({ mensaje: "Producto eliminado correctamente" });
     });
   }
+  // CONSULTAR productos destacados
+  static consultarDestacados(req, res) {
+    Producto.consultarDestacados(function (error, productos) {
+      if (error) {
+        res
+          .status(500)
+          .json({ mensaje: "Error al consultar destacados", error });
+        return;
+      }
+      res.json(productos);
+    });
+  }
 }
 
 module.exports = ProductoController;

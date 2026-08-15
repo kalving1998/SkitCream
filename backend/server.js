@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const productoRoutes = require("./routes/productoRoutes");
 const usuarioRoutes = require("./routes/usuarioRoutes");
+const upload = require("./config/multer");
 const pedidoRoutes = require("./routes/pedidoRoutes");
 const categoriaRoutes = require("./routes/categoriaRoutes");
 
@@ -17,6 +18,16 @@ app.use("/api/productos", productoRoutes);
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/pedidos", pedidoRoutes);
 app.use("/api/categorias", categoriaRoutes);
+app.post("/api/upload", upload.single("imagen"), function (req, res) {
+  if (!req.file) {
+    res.status(400).json({ mensaje: "No se subió ninguna imagen" });
+    return;
+  }
+  res.json({
+    mensaje: "Imagen subida correctamente",
+    archivo: req.file.originalname,
+  });
+});
 
 app.get("/", function (req, res) {
   res.send("Servidor SkitCream funcionando");
