@@ -1,3 +1,4 @@
+const API = "http://localhost:3000/api";
 // ================= SESIÓN (simulada con localStorage) =================
 
 // Revisamos si hay sesión activa guardada
@@ -153,7 +154,7 @@ if (authForm && window.location.pathname.includes("registro")) {
       password: password,
     };
 
-    fetch("http://localhost:3000/api/usuarios/registro", {
+    fetch(API + "/usuarios/registro", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
@@ -193,7 +194,7 @@ if (authForm && window.location.pathname.includes("login")) {
       password: document.getElementById("password").value,
     };
 
-    fetch("http://localhost:3000/api/usuarios/login", {
+    fetch(API + "/usuarios/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
@@ -418,7 +419,7 @@ if (checkoutForm) {
       total: calcularTotal(),
     };
 
-    fetch("http://localhost:3000/api/pedidos", {
+    fetch(API + "/pedidos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos),
@@ -589,7 +590,7 @@ if (window.location.pathname.includes("perfil")) {
     window.location.href = "login.html";
   } else {
     // Cargar datos del usuario desde la base de datos
-    fetch("http://localhost:3000/api/usuarios/" + usuarioId)
+    fetch(API + "/usuarios/" + usuarioId)
       .then(function (res) {
         return res.json();
       })
@@ -639,7 +640,7 @@ if (window.location.pathname.includes("perfil")) {
           datos.passwordNueva = passwordNueva;
         }
 
-        fetch("http://localhost:3000/api/usuarios/" + usuarioId, {
+        fetch(API + "/usuarios/" + usuarioId, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(datos),
@@ -676,7 +677,7 @@ if (window.location.pathname.includes("perfil")) {
     }
 
     // Cargar productos desde la API
-    fetch("http://localhost:3000/api/productos")
+    fetch(API + "/productos")
       .then(function (res) {
         return res.json();
       })
@@ -759,7 +760,7 @@ if (window.location.pathname.includes("perfil")) {
 
 if (window.location.pathname.includes("categorias")) {
   function cargarProductosCategorias() {
-    fetch("http://localhost:3000/api/productos")
+    fetch(API + "/productos")
       .then(function (res) {
         return res.json();
       })
@@ -867,7 +868,7 @@ if (window.location.pathname.includes("categorias")) {
   }
 
   // Cargar chips desde API y luego productos
-  fetch("http://localhost:3000/api/categorias")
+  fetch(API + "/categorias")
     .then(function (res) {
       return res.json();
     })
@@ -908,7 +909,7 @@ if (window.location.pathname.includes("recuperar")) {
       }
 
       // Verificar si el email existe
-      fetch("http://localhost:3000/api/usuarios")
+      fetch(API + "/usuarios")
         .then(function (res) {
           return res.json();
         })
@@ -927,7 +928,7 @@ if (window.location.pathname.includes("recuperar")) {
             "Skit" + Math.random().toString(36).slice(2, 8).toUpperCase();
 
           // Actualizar contraseña en la base de datos
-          fetch("http://localhost:3000/api/usuarios/" + usuario.id + "/reset", {
+          fetch(API + "/usuarios/" + usuario.id + "/reset", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ passwordTemporal: passwordTemporal }),
@@ -977,7 +978,7 @@ if (btnCerrarSesion) {
 // ================= CARGAR PRODUCTOS EN PÁGINA PRODUCTOS =================
 
 if (window.location.pathname.includes("productos")) {
-  fetch("http://localhost:3000/api/productos")
+  fetch(API + "/productos")
     .then(function (res) {
       return res.json();
     })
@@ -1067,7 +1068,7 @@ if (window.location.pathname.includes("productos")) {
 
 var destacadosGrid = document.getElementById("destacadosGrid");
 if (destacadosGrid) {
-  fetch("http://localhost:3000/api/productos/destacados")
+  fetch(API + "/productos/destacados")
     .then(function (res) {
       return res.json();
     })
