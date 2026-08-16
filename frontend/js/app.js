@@ -399,9 +399,10 @@ if (checkoutForm) {
     }
 
     // Validar que la fecha no sea anterior a hoy
-    var fechaInput = document.getElementById("fecha").value;
-    var hoyStr = new Date().toLocaleDateString("en-CA");
-    if (fechaInput < hoyStr) {
+    var fechaVal = new Date(document.getElementById("fecha").value);
+    var hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    if (fechaVal < hoy) {
       alert("La fecha de entrega no puede ser una fecha pasada.");
       return;
     }
