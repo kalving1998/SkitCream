@@ -450,7 +450,7 @@ if (checkoutForm) {
             `*Notas:* ${notas || "Sin notas"}%0A` +
             `*Total:* $${Number(total).toLocaleString()}`;
 
-          const numero = "+573103613070";
+          const numero = "573103613070";
           window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
 
           alert(
@@ -577,7 +577,7 @@ if (contactoForm) {
     }
 
     const texto = `Hola SkitCream! 👋%0A%0A*Nombre:* ${nombre}%0A*Correo:* ${email}%0A*Asunto:* ${asunto}%0A%0A*Mensaje:*%0A${mensaje}`;
-    const numero = "+573103613070"; // Cambia este número por el WhatsApp del negocio
+    const numero = "573103613070"; // Cambia este número por el WhatsApp del negocio
     window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
   });
 }
