@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/api";
+const API = "https://skitcream.onrender.com/api";
 // ================= SESIÓN (simulada con localStorage) =================
 
 // Revisamos si hay sesión activa guardada

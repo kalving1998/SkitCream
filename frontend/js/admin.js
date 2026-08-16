@@ -1,6 +1,6 @@
 // ================= PANEL DE ADMINISTRADOR =================
 
-const API = "http://localhost:3000/api";
+const API = "https://skitcream.onrender.com/api";
 var productoImagenActual = "";
 
 // ================= CARGAR CATEGORÍAS EN SELECTOR =================
