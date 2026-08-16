@@ -440,6 +440,16 @@ if (checkoutForm) {
           const notas = document.getElementById("notas").value;
           const total = datos.total;
 
+          var carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+          var productosTexto = carritoActual
+            .map(function (item) {
+              return (
+                `• ${item.nombre} x${item.cantidad} - $` +
+                (item.precio * item.cantidad).toLocaleString()
+              );
+            })
+            .join("%0A");
+
           const texto =
             `🛍️ *NUEVO PEDIDO SKITCREAM* 🛍️%0A%0A` +
             `*Pedido #:* ${data.id}%0A` +
@@ -447,11 +457,15 @@ if (checkoutForm) {
             `*Teléfono:* ${telefono}%0A` +
             `*Dirección:* ${direccion}, ${municipio}%0A` +
             `*Fecha de entrega:* ${fecha}%0A` +
-            `*Notas:* ${notas || "Sin notas"}%0A` +
+            `*Notas:* ${notas || "Sin notas"}%0A%0A` +
+            `*Productos:*%0A${productosTexto}%0A%0A` +
             `*Total:* $${Number(total).toLocaleString()}`;
 
           const numero = "573103613070";
-          window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
+          window.open(
+            `https://api.whatsapp.com/send?phone=${numero}&text=${texto}`,
+            "_blank",
+          );
 
           alert(
             "¡Pedido confirmado! Tu pedido #" + data.id + " está en camino.",
