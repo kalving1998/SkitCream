@@ -444,26 +444,50 @@ if (checkoutForm) {
           var productosTexto = carritoActual
             .map(function (item) {
               return (
-                `• ${item.nombre} x${item.cantidad} - $` +
+                "• " +
+                item.nombre +
+                " x" +
+                item.cantidad +
+                " - $" +
                 (item.precio * item.cantidad).toLocaleString()
               );
             })
-            .join("%0A");
+            .join("\n");
 
-          const texto =
-            `🛍️ *NUEVO PEDIDO SKITCREAM* 🛍️%0A%0A` +
-            `*Pedido #:* ${data.id}%0A` +
-            `*Nombre:* ${nombre}%0A` +
-            `*Teléfono:* ${telefono}%0A` +
-            `*Dirección:* ${direccion}, ${municipio}%0A` +
-            `*Fecha de entrega:* ${fecha}%0A` +
-            `*Notas:* ${notas || "Sin notas"}%0A%0A` +
-            `*Productos:*%0A${productosTexto}%0A%0A` +
-            `*Total:* $${Number(total).toLocaleString()}`;
+          var mensajeTexto =
+            "🛍️ *NUEVO PEDIDO SKITCREAM* 🛍️\n\n" +
+            "*Pedido #:* " +
+            data.id +
+            "\n" +
+            "*Nombre:* " +
+            nombre +
+            "\n" +
+            "*Teléfono:* " +
+            telefono +
+            "\n" +
+            "*Dirección:* " +
+            direccion +
+            ", " +
+            municipio +
+            "\n" +
+            "*Fecha de entrega:* " +
+            fecha +
+            "\n" +
+            "*Notas:* " +
+            (notas || "Sin notas") +
+            "\n\n" +
+            "*Productos:*\n" +
+            productosTexto +
+            "\n\n" +
+            "*Total:* $" +
+            Number(total).toLocaleString();
 
           const numero = "573103613070";
           window.open(
-            `https://api.whatsapp.com/send?phone=${numero}&text=${texto}`,
+            "https://api.whatsapp.com/send?phone=" +
+              numero +
+              "&text=" +
+              encodeURIComponent(mensajeTexto),
             "_blank",
           );
 
