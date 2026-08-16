@@ -25,7 +25,7 @@ app.post("/api/upload", upload.single("imagen"), function (req, res) {
   }
   res.json({
     mensaje: "Imagen subida correctamente",
-    archivo: req.file.originalname,
+    archivo: req.file.path,
   });
 });
 

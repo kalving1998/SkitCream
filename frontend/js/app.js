@@ -537,7 +537,7 @@ function renderizarCarrito() {
     fila.classList.add("carrito-item");
     fila.innerHTML = `
       <div class="carrito-item-img">
-        <img src="../assets/images/products/${item.id.toLowerCase()}.jpg" alt="${item.nombre}" />
+        <img src="${item.imagen || ""}" alt="${item.nombre}" />
       </div>
       <div class="carrito-item-info">
         <h3>${item.nombre}</h3>
@@ -733,7 +733,7 @@ if (window.location.pathname.includes("perfil")) {
           card.id = "fav-card-" + producto.id;
           card.innerHTML = `
             <div class="producto-imagen">
-              <img src="../assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+              <img src="${producto.imagen}" alt="${producto.nombre}" />
               <button class="fav-btn activo" data-id="${producto.id}">♥</button>
             </div>
             <div class="producto-info">
@@ -776,6 +776,7 @@ if (window.location.pathname.includes("perfil")) {
                   nombre: producto.nombre,
                   precio: Number(producto.precio),
                   cantidad: 1,
+                  imagen: producto.imagen,
                 });
               }
               localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -813,7 +814,7 @@ if (window.location.pathname.includes("categorias")) {
           card.setAttribute("data-categoria", producto.categoria);
           card.innerHTML = `
             <div class="producto-imagen">
-              <img src="../assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+              <img src="${producto.imagen}" alt="${producto.nombre}" />
               <button class="fav-btn ${esFavorito ? "activo" : ""}" data-id="${producto.id}">
                 ${esFavorito ? "♥" : "♡"}
               </button>
@@ -1032,7 +1033,7 @@ if (window.location.pathname.includes("productos")) {
 
         var contenido = `
           <div class="producto-fila-imagen">
-            <img src="../assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+            <img src="${producto.imagen}" alt="${producto.nombre}" />
           </div>
           <div class="producto-fila-texto">
             <span class="producto-fila-categoria">${producto.categoria}</span>
@@ -1118,7 +1119,7 @@ if (destacadosGrid) {
         card.classList.add("producto-card");
         card.innerHTML = `
           <div class="producto-imagen">
-            <img src="assets/images/products/${producto.imagen}" alt="${producto.nombre}" />
+            <img src="${producto.imagen}" alt="${producto.nombre}" />
             <button class="fav-btn ${esFavorito ? "activo" : ""}" data-id="${producto.id}">
               ${esFavorito ? "♥" : "♡"}
             </button>

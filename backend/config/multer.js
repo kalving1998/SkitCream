@@ -1,26 +1,22 @@
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
-const path = require("path");
+require("dotenv").config();
 
-// Configurar dónde se guardan las imágenes
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../../frontend/assets/images/products/"));
-  },
-  filename: function (req, file, cb) {
-    // Nombre original del archivo
-    cb(null, file.originalname);
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "skitcream/products",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
   },
 });
 
-// Solo permitir imágenes
-const fileFilter = function (req, file, cb) {
-  if (file.mimetype.startsWith("image/")) {
-    cb(null, true);
-  } else {
-    cb(new Error("Solo se permiten imágenes"), false);
-  }
-};
-
-const upload = multer({ storage: storage, fileFilter: fileFilter });
+const upload = multer({ storage: storage });
 
 module.exports = upload;
