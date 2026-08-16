@@ -429,6 +429,7 @@ if (checkoutForm) {
       })
       .then(function (data) {
         if (data.id) {
+          var carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
           localStorage.removeItem("carrito");
 
           // Enviar pedido por WhatsApp
@@ -440,7 +441,6 @@ if (checkoutForm) {
           const notas = document.getElementById("notas").value;
           const total = datos.total;
 
-          var carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
           var productosTexto = carritoActual
             .map(function (item) {
               return (
@@ -484,7 +484,7 @@ if (checkoutForm) {
 
           const numero = "573103613070";
           window.open(
-            "https://api.whatsapp.com/send?phone=" +
+            "https://web.whatsapp.com/send?phone=" +
               numero +
               "&text=" +
               encodeURIComponent(mensajeTexto),
