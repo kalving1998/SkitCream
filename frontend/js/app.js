@@ -487,7 +487,7 @@ if (checkoutForm) {
             "*Total:* $" +
             Number(total).toLocaleString();
 
-          const numero = "3102078667";
+          const numero = "573102078667";
           window.open(
             "https://wa.me/" +
               numero +
