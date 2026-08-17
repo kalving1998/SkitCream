@@ -489,9 +489,9 @@ if (checkoutForm) {
 
           const numero = "3102078667";
           window.open(
-            "https://web.whatsapp.com/send?phone=" +
+            "https://wa.me/" +
               numero +
-              "&text=" +
+              "?text=" +
               encodeURIComponent(mensajeTexto),
             "_blank",
           );
@@ -635,9 +635,9 @@ if (contactoForm) {
 
     const numero = "573102078667";
     window.open(
-      "https://web.whatsapp.com/send?phone=" +
+      "https://wa.me/" +
         numero +
-        "&text=" +
+        "?text=" +
         encodeURIComponent(mensajeContacto),
       "_blank",
     );

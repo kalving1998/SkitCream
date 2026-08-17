@@ -10,7 +10,11 @@ const categoriaRoutes = require("./routes/categoriaRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://skitcream.netlify.app",
+  }),
+);
 app.use(express.json());
 
 // Rutas
