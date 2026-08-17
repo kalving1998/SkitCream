@@ -737,6 +737,46 @@ if (window.location.pathname.includes("perfil")) {
         "<p style='color:#777;padding:20px 0'>No tienes favoritos aún. Ve a Categorías para agregar.</p>";
       return;
     }
+    if (window.location.pathname.includes("perfil")) {
+      function renderizarPedidosPerfil() {
+        var usuarioId = sessionStorage.getItem("usuarioId");
+        var grid = document.getElementById("pedidosGrid");
+        if (!grid || !usuarioId) return;
+
+        fetch(API + "/pedidos/usuario/" + usuarioId)
+          .then(function (res) {
+            return res.json();
+          })
+          .then(function (pedidos) {
+            if (pedidos.length === 0) {
+              grid.innerHTML =
+                "<p style='color:#777'>Aún no has hecho ningún pedido.</p>";
+              return;
+            }
+
+            grid.innerHTML = "";
+            pedidos.forEach(function (p) {
+              var fecha = new Date(p.created_at).toLocaleDateString("es-CO");
+              var card = document.createElement("div");
+              card.classList.add("pedido-card");
+              card.innerHTML = `
+            <div class="pedido-info">
+              <span class="pedido-numero">Pedido #${p.id}</span>
+              <span class="pedido-fecha">${fecha}</span>
+            </div>
+            <div class="pedido-detalle">
+              <span>Total</span>
+              <span class="pedido-total">$${Number(p.total).toLocaleString()}</span>
+            </div>
+            <span class="pedido-estado ${p.estado}">${p.estado}</span>
+          `;
+              grid.appendChild(card);
+            });
+          });
+      }
+
+      renderizarPedidosPerfil();
+    }
 
     // Cargar productos desde la API
     fetch(API + "/productos")
