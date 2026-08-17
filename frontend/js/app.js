@@ -423,7 +423,48 @@ if (checkoutForm) {
       notas: document.getElementById("notas").value,
       total: calcularTotal(),
     };
+    function renderizarResumenCheckout() {
+      var contenedor = document.getElementById("checkoutResumen");
+      if (!contenedor) return;
 
+      var carritoActual = JSON.parse(localStorage.getItem("carrito")) || [];
+
+      if (carritoActual.length === 0) {
+        contenedor.innerHTML =
+          "<p style='color:#777'>Tu carrito está vacío.</p>";
+        return;
+      }
+
+      var html = "";
+      carritoActual.forEach(function (item) {
+        html +=
+          "<div class='resumen-fila'>" +
+          "<span>" +
+          item.nombre +
+          " x" +
+          item.cantidad +
+          "</span>" +
+          "<span>$" +
+          (item.precio * item.cantidad).toLocaleString() +
+          "</span>" +
+          "</div>";
+      });
+
+      var total = calcularTotal();
+      html +=
+        "<div class='resumen-fila resumen-total'>" +
+        "<span>Total</span>" +
+        "<span>$" +
+        total.toLocaleString() +
+        "</span>" +
+        "</div>";
+
+      contenedor.innerHTML = html;
+    }
+
+    if (window.location.pathname.includes("checkout")) {
+      renderizarResumenCheckout();
+    }
     fetch(API + "/pedidos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
