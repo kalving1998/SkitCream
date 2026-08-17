@@ -482,7 +482,7 @@ if (checkoutForm) {
             "*Total:* $" +
             Number(total).toLocaleString();
 
-          const numero = "573103613070";
+          const numero = "3102078667";
           window.open(
             "https://web.whatsapp.com/send?phone=" +
               numero +
@@ -614,9 +614,28 @@ if (contactoForm) {
       return;
     }
 
-    const texto = `Hola SkitCream! 👋%0A%0A*Nombre:* ${nombre}%0A*Correo:* ${email}%0A*Asunto:* ${asunto}%0A%0A*Mensaje:*%0A${mensaje}`;
-    const numero = "573103613070"; // Cambia este número por el WhatsApp del negocio
-    window.open(`https://wa.me/${numero}?text=${texto}`, "_blank");
+    var mensajeContacto =
+      "Hola SkitCream! 👋\n\n" +
+      "*Nombre:* " +
+      nombre +
+      "\n" +
+      "*Correo:* " +
+      email +
+      "\n" +
+      "*Asunto:* " +
+      asunto +
+      "\n\n" +
+      "*Mensaje:*\n" +
+      mensaje;
+
+    const numero = "573102078667";
+    window.open(
+      "https://web.whatsapp.com/send?phone=" +
+        numero +
+        "&text=" +
+        encodeURIComponent(mensajeContacto),
+      "_blank",
+    );
   });
 }
 // ================= PERFIL USUARIO =================
@@ -870,6 +889,7 @@ if (window.location.pathname.includes("categorias")) {
                   nombre: producto.nombre,
                   precio: Number(producto.precio),
                   cantidad: 1,
+                  imagen: producto.imagen,
                 });
               }
               localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -1175,6 +1195,7 @@ if (destacadosGrid) {
                 nombre: producto.nombre,
                 precio: Number(producto.precio),
                 cantidad: 1,
+                imagen: producto.imagen,
               });
             }
             localStorage.setItem("carrito", JSON.stringify(carrito));
