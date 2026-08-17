@@ -252,10 +252,10 @@ cargarCategoriasSelector();
 // ================= CERRAR SESIÓN ADMIN =================
 document.querySelector(".admin-salir").addEventListener("click", function (e) {
   e.preventDefault();
-  localStorage.removeItem("sesionActiva");
-  localStorage.removeItem("usuarioId");
-  localStorage.removeItem("usuarioNombre");
-  localStorage.removeItem("usuarioRol");
+  sessionStorage.removeItem("sesionActiva");
+  sessionStorage.removeItem("usuarioId");
+  sessionStorage.removeItem("usuarioNombre");
+  sessionStorage.removeItem("usuarioRol");
   window.location.href = "../index.html";
 });
 // ================= CATEGORÍAS =================

@@ -3,7 +3,7 @@ const API = "https://skitcream.onrender.com/api";
 
 // Revisamos si hay sesión activa guardada
 function sesionActiva() {
-  return localStorage.getItem("sesionActiva") === "true";
+  return sessionStorage.getItem("sesionActiva") === "true";
 }
 
 // ================= MENÚ HAMBURGUESA =================
@@ -164,9 +164,9 @@ if (authForm && window.location.pathname.includes("registro")) {
       })
       .then(function (data) {
         if (data.id) {
-          localStorage.setItem("sesionActiva", "true");
-          localStorage.setItem("usuarioId", data.id);
-          localStorage.setItem("usuarioNombre", datos.nombre);
+          sessionStorage.setItem("sesionActiva", "true");
+          sessionStorage.setItem("usuarioId", data.id);
+          sessionStorage.setItem("usuarioNombre", datos.nombre);
           alert("Cuenta creada exitosamente. Bienvenido " + datos.nombre);
           window.location.href = "login.html";
         } else {
@@ -211,9 +211,9 @@ if (authForm && window.location.pathname.includes("login")) {
           } else {
             localStorage.removeItem("emailRecordado");
           }
-          localStorage.setItem("sesionActiva", "true");
-          localStorage.setItem("usuarioId", data.usuario.id);
-          localStorage.setItem("usuarioNombre", data.usuario.nombre);
+          sessionStorage.setItem("sesionActiva", "true");
+          sessionStorage.setItem("usuarioId", data.usuario.id);
+          sessionStorage.setItem("usuarioNombre", data.usuario.nombre);
           if (data.usuario.rol === "admin") {
             window.location.href = "admin.html";
           } else {
@@ -267,7 +267,13 @@ if (window.location.pathname.includes("categorias") && !sesionActiva()) {
 
 // ================= ZONA PRIVADA =================
 
-const paginasPrivadas = ["categorias", "perfil", "carrito", "checkout"];
+const paginasPrivadas = [
+  "categorias",
+  "perfil",
+  "carrito",
+  "checkout",
+  "admin",
+];
 const paginaActual = window.location.pathname;
 const esPaginaPrivada = paginasPrivadas.some(function (p) {
   return paginaActual.includes(p);
@@ -293,10 +299,10 @@ if (esPaginaPrivada && sesionActiva()) {
         "Si sales de esta sección deberás iniciar sesión nuevamente para volver. ¿Deseas continuar?",
       );
       if (confirmar) {
-        localStorage.removeItem("sesionActiva");
-        localStorage.removeItem("usuarioId");
-        localStorage.removeItem("usuarioNombre");
-        localStorage.removeItem("usuarioRol");
+        sessionStorage.removeItem("sesionActiva");
+        sessionStorage.removeItem("usuarioId");
+        sessionStorage.removeItem("usuarioNombre");
+        sessionStorage.removeItem("usuarioRol");
         window.location.href = logo.querySelector("a")
           ? logo.querySelector("a").href
           : "../index.html";
@@ -316,9 +322,9 @@ if (esPaginaPrivada && sesionActiva()) {
           "Si sales de esta sección deberás iniciar sesión nuevamente para volver. ¿Deseas continuar?",
         );
         if (confirmar) {
-          localStorage.removeItem("sesionActiva");
-          localStorage.removeItem("usuarioId");
-          localStorage.removeItem("usuarioNombre");
+          sessionStorage.removeItem("sesionActiva");
+          sessionStorage.removeItem("usuarioId");
+          sessionStorage.removeItem("usuarioNombre");
           window.location.href = enlace.href;
         }
       });
@@ -371,7 +377,7 @@ if (checkoutForm) {
   checkoutForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const usuarioId = localStorage.getItem("usuarioId");
+    const usuarioId = sessionStorage.getItem("usuarioId");
     if (!usuarioId) {
       alert("Debes iniciar sesión para hacer un pedido");
       window.location.href = "login.html";
@@ -399,10 +405,9 @@ if (checkoutForm) {
     }
 
     // Validar que la fecha no sea anterior a hoy
-    var fechaVal = new Date(document.getElementById("fecha").value);
-    var hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-    if (fechaVal < hoy) {
+    var fechaInput = document.getElementById("fecha").value;
+    var hoyStr = new Date().toLocaleDateString("en-CA");
+    if (fechaInput < hoyStr) {
       alert("La fecha de entrega no puede ser una fecha pasada.");
       return;
     }
@@ -641,7 +646,7 @@ if (contactoForm) {
 // ================= PERFIL USUARIO =================
 
 if (window.location.pathname.includes("perfil")) {
-  const usuarioId = localStorage.getItem("usuarioId");
+  const usuarioId = sessionStorage.getItem("usuarioId");
 
   if (!usuarioId) {
     window.location.href = "login.html";
@@ -1024,11 +1029,11 @@ var btnCerrarSesion = document.querySelector(".perfil-salir");
 if (btnCerrarSesion) {
   btnCerrarSesion.addEventListener("click", function (e) {
     e.preventDefault();
-    localStorage.removeItem("sesionActiva");
-    localStorage.removeItem("usuarioId");
-    localStorage.removeItem("usuarioNombre");
-    localStorage.removeItem("usuarioRol");
-    localStorage.removeItem("passwordTemporal");
+    sessionStorage.removeItem("sesionActiva");
+    sessionStorage.removeItem("usuarioId");
+    sessionStorage.removeItem("usuarioNombre");
+    sessionStorage.removeItem("usuarioRol");
+    sessionStorage.removeItem("passwordTemporal");
     localStorage.removeItem("carrito");
     localStorage.removeItem("favoritos");
     window.location.replace("../index.html");
