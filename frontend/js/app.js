@@ -461,9 +461,6 @@ if (checkoutForm) {
 
           var mensajeTexto =
             "🛍️ *NUEVO PEDIDO SKITCREAM* 🛍️\n\n" +
-            "*Pedido #:* " +
-            data.id +
-            "\n" +
             "*Nombre:* " +
             nombre +
             "\n" +
