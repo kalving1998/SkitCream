@@ -159,10 +159,7 @@ class UsuarioController {
   static resetPassword(req, res) {
     const id = req.params.id;
     const { passwordTemporal } = req.body;
-    console.log("Reset password - ID:", id, "Password:", passwordTemporal);
     const passwordEncriptada = bcrypt.hashSync(passwordTemporal, 10);
-    console.log("Password encriptada:", passwordEncriptada);
-
     const consulta = "UPDATE usuarios SET password = ? WHERE id = ?";
     const conexion = require("../config/db");
     conexion.query(
